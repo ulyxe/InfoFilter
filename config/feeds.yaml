@@ -1,0 +1,40 @@
+feeds:
+  - name: "Simon Willison's Weblog"
+    url: "https://simonwillison.net/atom/everything/"
+    tags: [ai, agents, llm, claude, vibe-coding]
+
+  - name: "Latent Space (AI Engineer Newsletter)"
+    url: "https://www.latent.space/feed"
+    tags: [agents, ai-engineering, models, infra]
+
+  - name: "Hugging Face Blog"
+    url: "https://huggingface.co/blog/feed.xml"
+    tags: [models, open-source, tools]
+
+  - name: "Anthropic News (community mirror)"
+    url: "https://raw.githubusercontent.com/cnzhujie/ai-rss-feed/main/rss/anthropic_engineering_rss.xml"
+    tags: [claude, anthropic, releases]
+
+  - name: "minimaxir — AI tools & automation"
+    url: "https://minimaxir.com/index.xml"
+    tags: [ai-tools, automation, python]
+
+  - name: "Agentic Coding Today (Podcast)"
+    url: "https://rss.com/podcasts/vibe-coding-today/rss.xml"
+    tags: [claude-code, codex, agentic, vibe-coding]
+
+  - name: "Hacker News — Agentic/Vibe Coding"
+    url: "https://hnrss.org/newest?q=claude+code+OR+agentic+coding+OR+vibe+coding&count=15&points=10"
+    tags: [community, tools, discussion]
+
+  - name: "GitHub Blog"
+    url: "https://github.blog/feed/"
+    tags: [copilot, devtools, ai-coding]
+
+  - name: "The AI Solopreneur"
+    url: "https://aisolopreneur.beehiiv.com/feed"
+    tags: [solopreneur, ai-workflows, side-hustle]
+
+  - name: "Ahead of AI (Sebastian Raschka)"
+    url: "https://magazine.sebastianraschka.com/feed"
+    tags: [llm, research, practical-ai]
