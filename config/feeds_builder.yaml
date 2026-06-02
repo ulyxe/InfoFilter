@@ -1,0 +1,40 @@
+feeds:
+  - name: "Ben's Bites"
+    url: "https://bensbites.beehiiv.com/feed"
+    tags: [ai-business, product-launches, founders, startups]
+
+  - name: "The Rundown AI"
+    url: "https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml"
+    tags: [ai-news, tools, business, workflows]
+
+  - name: "Product Hunt — AI"
+    url: "https://www.producthunt.com/feed?category=artificial-intelligence"
+    tags: [product-launches, tools, saas, ai]
+
+  - name: "Indie Hackers"
+    url: "https://www.indiehackers.com/feed.xml"
+    tags: [indie, bootstrapped, saas, revenue, side-hustle]
+
+  - name: "Paul Graham Essays"
+    url: "http://www.aaronsw.com/2002/feeds/pgessays.rss"
+    tags: [startups, strategy, thinking, saas]
+
+  - name: "The AI Solopreneur"
+    url: "https://aisolopreneur.beehiiv.com/feed"
+    tags: [solopreneur, ai-workflows, automation, side-hustle]
+
+  - name: "Lenny's Newsletter"
+    url: "https://www.lennysnewsletter.com/feed"
+    tags: [product, growth, saas, monetization]
+
+  - name: "n8n Blog"
+    url: "https://blog.n8n.io/rss/"
+    tags: [automation, n8n, agents, workflows]
+
+  - name: "Hacker News — AI Business"
+    url: "https://hnrss.org/newest?q=solopreneur+OR+indie+hacker+OR+ai+business+OR+side+hustle&count=15&points=15"
+    tags: [community, discussion, ideas, revenue]
+
+  - name: "a16z Blog"
+    url: "https://a16z.com/feed/"
+    tags: [venture, trends, ai-market, saas]
