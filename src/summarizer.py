@@ -12,6 +12,19 @@ def _get_client() -> Groq:
     return _client
 
 
+def _parse_json(raw: str) -> dict:
+    """Parse a model response into JSON, tolerating markdown code fences or
+    surrounding prose by falling back to the outermost {...} object."""
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        start = raw.find("{")
+        end = raw.rfind("}")
+        if start != -1 and end > start:
+            return json.loads(raw[start:end + 1])
+        raise
+
+
 SYSTEM_PROMPT = """Sei un assistente esperto di AI engineering e sviluppo SaaS con agenti AI.
 Ricevi articoli della settimana su vibe coding, agentic AI e Claude Code best practices.
 Rispondi SOLO con un oggetto JSON valido, senza markdown, senza backtick, senza testo aggiuntivo.
@@ -64,7 +77,7 @@ Includi massimo 6 highlights. Per action_of_the_week suggerisci qualcosa di prat
             max_tokens=2000
         )
         raw = response.choices[0].message.content.strip()
-        return json.loads(raw)
+        return _parse_json(raw)
     except Exception as e:
-        print(f"[WARN] Groq API error: {e}")
+        print(f"[WARN] Groq API error: {type(e).__name__}: {e}")
         return None

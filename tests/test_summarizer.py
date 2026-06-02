@@ -70,3 +70,19 @@ def test_builder_parses_valid_json(monkeypatch):
 def test_builder_invalid_json_returns_none(monkeypatch):
     monkeypatch.setattr(summarizer_builder, "_get_client", lambda: _FakeClient("garbage"))
     assert summarizer_builder.summarize_builder(_articles()) is None
+
+
+def test_engineer_parses_json_in_markdown_fences(monkeypatch):
+    payload = {"intro": "ciao", "highlights": []}
+    fenced = "```json\n" + json.dumps(payload) + "\n```"
+    monkeypatch.setattr(summarizer, "_get_client", lambda: _FakeClient(fenced))
+    result = summarizer.summarize_articles(_articles())
+    assert result["intro"] == "ciao"
+
+
+def test_builder_parses_json_with_leading_prose(monkeypatch):
+    payload = {"intro": "ok", "business_ideas": []}
+    noisy = "Ecco il JSON richiesto:\n" + json.dumps(payload)
+    monkeypatch.setattr(summarizer_builder, "_get_client", lambda: _FakeClient(noisy))
+    result = summarizer_builder.summarize_builder(_articles())
+    assert result["intro"] == "ok"

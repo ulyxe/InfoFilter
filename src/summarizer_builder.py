@@ -12,6 +12,19 @@ def _get_client() -> Groq:
     return _client
 
 
+def _parse_json(raw: str) -> dict:
+    """Parse a model response into JSON, tolerating markdown code fences or
+    surrounding prose by falling back to the outermost {...} object."""
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        start = raw.find("{")
+        end = raw.rfind("}")
+        if start != -1 and end > start:
+            return json.loads(raw[start:end + 1])
+        raise
+
+
 SYSTEM_PROMPT_BUILDER = """Sei un mentor esperto di business digitale, solopreneurship e AI automation.
 Ricevi articoli su AI business, side hustle, automazioni agentiche e indie hacking.
 Il lettore è un ingegnere italiano con un lavoro full-time che vuole costruire un side income con AI,
@@ -77,10 +90,10 @@ Includi 2-3 business_ideas. Per action_of_the_week suggerisci qualcosa di immedi
             ],
             model="meta-llama/llama-4-scout-17b-16e-instruct",
             temperature=0.5,
-            max_tokens=2500
+            max_tokens=4000
         )
         raw = response.choices[0].message.content.strip()
-        return json.loads(raw)
+        return _parse_json(raw)
     except Exception as e:
-        print(f"[WARN] Groq API error (Builder): {e}")
+        print(f"[WARN] Groq API error (Builder): {type(e).__name__}: {e}")
         return None
