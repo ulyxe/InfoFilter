@@ -14,7 +14,7 @@ cron. No always-on machine required.
 
 Two independent pipelines share one infrastructure layer. Each pipeline runs:
 `fetch RSS (last 7 days)` -> `summarize to structured JSON via Groq` ->
-`render HTML + plaintext email` -> `send via Outlook SMTP`.
+`render HTML + plaintext email` -> `send via SMTP (Gmail by default)`.
 
 Shared modules:
 - `src/feed_reader.py` - `fetch_recent_articles(feeds, days)`: parses feeds, drops
@@ -47,6 +47,10 @@ entry points are run as `python src/main.py` from the repo root.
   created lazily via `_get_client()` so modules import without `GROQ_API_KEY`.
 - `source_url` fields fall back to `"#"` via `value or "#"` (covers empty strings).
 - The four GitHub Secrets are shared by both workflows. No per-digest secrets.
+- Email is sent over SMTP via `send_digest()`. Host/port come from `SMTP_HOST`
+  (default `smtp.gmail.com`) and `SMTP_PORT` (default `587`); credentials from
+  `SMTP_USER` / `SMTP_PASSWORD`. Outlook/Office 365 basic SMTP auth is disabled by
+  Microsoft (`535 5.7.139`), so Gmail with an App Password is the default provider.
 
 ## Commands
 

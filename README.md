@@ -2,8 +2,8 @@
 
 A zero-cost, server-less system that emails two weekly AI digests, each driven by
 its own curated RSS feed list, summarized into structured content by the Groq API,
-rendered as an HTML + plaintext email, and delivered over Outlook SMTP. Scheduling
-runs entirely on GitHub Actions cron, so no always-on machine is required.
+rendered as an HTML + plaintext email, and delivered over SMTP (Gmail by default).
+Scheduling runs entirely on GitHub Actions cron, so no always-on machine is required.
 
 ## The two digests
 
@@ -25,9 +25,24 @@ call falls back to a plain article list, so a run never crashes.
    | Secret | Description |
    |---|---|
    | `GROQ_API_KEY` | API key from console.groq.com |
-   | `OUTLOOK_EMAIL` | Outlook sender address |
-   | `OUTLOOK_PASSWORD` | Outlook password or App Password (if 2FA is enabled) |
+   | `SMTP_USER` | Sender email address (e.g. your Gmail address) |
+   | `SMTP_PASSWORD` | SMTP password. For Gmail this is a 16-char App Password, not your normal password |
    | `DIGEST_RECIPIENT_EMAIL` | Recipient address (can be the same as the sender) |
+
+   The SMTP server defaults to `smtp.gmail.com:587` (STARTTLS). To use a different
+   provider, also set the optional `SMTP_HOST` and `SMTP_PORT` secrets.
+
+   ### Gmail App Password
+
+   Gmail requires an App Password (a normal account password will not work over SMTP):
+
+   1. Enable 2-Step Verification on your Google account.
+   2. Go to Google Account -> Security -> App passwords, create one, and copy the
+      16-character value.
+   3. Use that value as `SMTP_PASSWORD` and your Gmail address as `SMTP_USER`.
+
+   > Outlook / Office 365 basic SMTP auth is disabled by Microsoft and will fail with
+   > `535 5.7.139 basic authentication is disabled`, which is why Gmail is the default.
 
 ## Running the tests
 

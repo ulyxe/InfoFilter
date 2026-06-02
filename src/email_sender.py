@@ -7,8 +7,10 @@ from pathlib import Path
 
 
 def send_digest(subject: str, html_body: str, plain_body: str) -> None:
-    sender = os.environ["OUTLOOK_EMAIL"]
-    password = os.environ["OUTLOOK_PASSWORD"]
+    host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    port = int(os.environ.get("SMTP_PORT", "587"))
+    sender = os.environ["SMTP_USER"]
+    password = os.environ["SMTP_PASSWORD"]
     recipient = os.environ["DIGEST_RECIPIENT_EMAIL"]
 
     msg = MIMEMultipart("alternative")
@@ -18,7 +20,7 @@ def send_digest(subject: str, html_body: str, plain_body: str) -> None:
     msg.attach(MIMEText(plain_body, "plain", "utf-8"))
     msg.attach(MIMEText(html_body, "html", "utf-8"))
 
-    with smtplib.SMTP("smtp.office365.com", 587) as server:
+    with smtplib.SMTP(host, port) as server:
         server.ehlo()
         server.starttls()
         server.login(sender, password)

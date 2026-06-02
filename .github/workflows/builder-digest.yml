@@ -19,7 +19,7 @@ jobs:
       - name: Run Builder digest
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          OUTLOOK_EMAIL: ${{ secrets.OUTLOOK_EMAIL }}
-          OUTLOOK_PASSWORD: ${{ secrets.OUTLOOK_PASSWORD }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           DIGEST_RECIPIENT_EMAIL: ${{ secrets.DIGEST_RECIPIENT_EMAIL }}
         run: python src/main_builder.py
