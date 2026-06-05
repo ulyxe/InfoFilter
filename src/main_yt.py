@@ -67,25 +67,48 @@ def _md_to_html(text: str) -> str:
 
 
 def _parse_yt_analysis(analysis: str) -> dict:
-    """Extract structured fields from a Gemini analysis string."""
-    fields: dict = {"argomento": "", "punti": [], "perche": ""}
+    """Extract all structured fields from a Gemini analysis string."""
+    fields: dict = {
+        "canale": "", "durata": "", "argomento": "",
+        "punti": [],
+        "builder_roi": "", "engineer_roi": "",
+        "perche": "", "tags": "",
+    }
+
+    def _extract(s: str, prefix: str) -> str | None:
+        if s.startswith(prefix) and ":**" in s:
+            return s.split(":**", 1)[-1].strip().strip("[]")
+        return None
+
     in_punti = False
     for line in analysis.splitlines():
         s = line.strip()
-        if s.startswith("**Argomento principale:**"):
-            fields["argomento"] = s.split(":**", 1)[-1].strip().strip("[]")
-            in_punti = False
+        if not s:
+            continue
+
+        if (v := _extract(s, "**Canale:**")) is not None:
+            fields["canale"] = v; in_punti = False
+        elif (v := _extract(s, "**Durata stimata:**")) is not None:
+            fields["durata"] = v; in_punti = False
+        elif (v := _extract(s, "**Argomento principale:**")) is not None:
+            fields["argomento"] = v; in_punti = False
         elif s.startswith("**Punti chiave:**"):
             in_punti = True
         elif in_punti and s.startswith("- "):
             fields["punti"].append(s[2:].strip())
         elif in_punti and s.startswith("**"):
             in_punti = False
-            if s.startswith("**Perché:**"):
-                fields["perche"] = s.split(":**", 1)[-1].strip().strip("[]")
-        elif s.startswith("**Perché:**"):
-            fields["perche"] = s.split(":**", 1)[-1].strip().strip("[]")
-            in_punti = False
+
+        if not in_punti:
+            if (v := _extract(s, "**Builder ROI:**")) is not None:
+                fields["builder_roi"] = v
+            elif (v := _extract(s, "**Engineer ROI:**")) is not None:
+                fields["engineer_roi"] = v
+            elif s.startswith("**Perch") and ":**" in s:
+                fields["perche"] = s.split(":**", 1)[-1].strip()
+            elif (v := _extract(s, "**Tag:**")) is not None:
+                fields["tags"] = v
+
     return fields
 
 
@@ -188,18 +211,51 @@ def run_report() -> None:
                 f'<span style="font-size:11px;font-weight:bold;color:{color};">'
                 f'{emoji} {topic}</span>'
             )
-            f = _parse_yt_analysis(entry.get("analysis", ""))
+            af = _parse_yt_analysis(entry.get("analysis", ""))
             punti_html = "".join(
-                f'<li style="color:#94a3b8;margin:3px 0;font-size:13px;">{_md_to_html(p)}</li>'
-                for p in f["punti"]
+                f'<li style="color:#94a3b8;margin:4px 0;font-size:13px;">{_md_to_html(p)}</li>'
+                for p in af["punti"]
+            )
+            meta_parts = [s for s in [escape(af["canale"]), escape(af["durata"])] if s]
+            meta_html = (
+                f'<div style="font-size:12px;color:#64748b;margin-bottom:10px;">'
+                f'{"&nbsp;·&nbsp;".join(meta_parts)}</div>'
+                if meta_parts else ""
+            )
+            roi_rows = ""
+            if af["builder_roi"]:
+                roi_rows += (
+                    f'<div style="margin-bottom:5px;">'
+                    f'<span style="font-size:11px;font-weight:bold;color:#f97316;">🏗 Builder ROI</span>'
+                    f'&nbsp;<span style="color:#cbd5e1;font-size:13px;">{_md_to_html(af["builder_roi"])}</span>'
+                    f'</div>'
+                )
+            if af["engineer_roi"]:
+                roi_rows += (
+                    f'<div>'
+                    f'<span style="font-size:11px;font-weight:bold;color:#3b82f6;">⚙️ Engineer ROI</span>'
+                    f'&nbsp;<span style="color:#cbd5e1;font-size:13px;">{_md_to_html(af["engineer_roi"])}</span>'
+                    f'</div>'
+                )
+            roi_html = (
+                f'<div style="background:#0f172a;border-radius:4px;padding:10px 12px;margin:0 0 10px 0;">'
+                f'{roi_rows}</div>'
+                if roi_rows else ""
+            )
+            tags_html = (
+                f'<div style="font-size:11px;color:#475569;margin-top:6px;">{escape(af["tags"])}</div>'
+                if af["tags"] else ""
             )
             video_cards_html += f"""
             <div style="background:#1e293b;padding:20px;margin:12px 0;border-radius:6px;border-left:3px solid #ef4444;">
-              <div style="margin-bottom:6px;">{badge}&nbsp;&nbsp;<span style="font-size:11px;color:#ef4444;">{stars}</span></div>
-              <h3 style="margin:0 0 8px 0;"><a href="{entry.get('url', '#')}" style="color:#f87171;text-decoration:none;">{escape(entry.get('title', ''))}</a></h3>
-              {f'<p style="color:#cbd5e1;margin:0 0 8px 0;font-size:14px;">{_md_to_html(f["argomento"])}</p>' if f["argomento"] else ""}
-              {f'<ul style="margin:4px 0 8px 0;padding-left:16px;">{punti_html}</ul>' if punti_html else ""}
-              {f'<p style="color:#94a3b8;font-size:13px;margin:0;font-style:italic;">💡 {_md_to_html(f["perche"])}</p>' if f["perche"] else ""}
+              <div style="margin-bottom:6px;">{badge}&nbsp;&nbsp;<span style="font-size:13px;color:#ef4444;">{stars}</span></div>
+              <h3 style="margin:0 0 4px 0;"><a href="{entry.get('url', '#')}" style="color:#f87171;text-decoration:none;">{escape(entry.get('title', ''))}</a></h3>
+              {meta_html}
+              {f'<p style="color:#cbd5e1;margin:0 0 8px 0;font-size:14px;">{_md_to_html(af["argomento"])}</p>' if af["argomento"] else ""}
+              {f'<ul style="margin:4px 0 10px 0;padding-left:16px;">{punti_html}</ul>' if punti_html else ""}
+              {roi_html}
+              {f'<p style="color:#94a3b8;font-size:13px;margin:0 0 6px 0;font-style:italic;">💡 {_md_to_html(af["perche"])}</p>' if af["perche"] else ""}
+              {tags_html}
             </div>"""
 
         template = Template(_TEMPLATE_PATH.read_text(encoding="utf-8"))
