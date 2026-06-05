@@ -221,6 +221,7 @@ def process_new_videos(
                 "status": "ok",
                 "analysis": analysis,
                 "rating": extract_rating(analysis),
+                "topic": extract_topic(analysis),
                 "title": extract_title(analysis, video_id),
                 "processed_at": datetime.now().isoformat(timespec="seconds"),
             }

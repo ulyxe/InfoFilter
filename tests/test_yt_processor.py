@@ -152,8 +152,11 @@ def _make_mock_client(analysis_text: str = None, side_effect=None):
         "**Durata stimata:** 10 min\n"
         "**Argomento principale:** Testing\n"
         "**Punti chiave:**\n- punto 1\n"
+        "**Builder ROI:** 3 — moderatamente utile\n"
+        "**Engineer ROI:** 4 — buono per il coding\n"
+        "**Topic dominante:** Engineer\n"
         "**Vale il tempo?** ⭐⭐⭐\n"
-        "**Perché:** buono\n"
+        "**Perché:** buono per Engineer\n"
         "**Tag:** #test\n"
     )
     if side_effect is not None:
@@ -223,6 +226,24 @@ def test_process_new_videos_adds_processed_at(mock_sleep):
     ts = result["v1"]["processed_at"]
     assert len(ts) == 19
     assert ts[4] == "-" and ts[7] == "-" and ts[10] == "T"
+
+
+@patch("yt_processor.time.sleep")
+def test_process_new_videos_stores_topic(mock_sleep):
+    """Successful cache entries include a 'topic' field extracted from the analysis."""
+    client = _make_mock_client()
+
+    result, ok, failed = yt_processor.process_new_videos(
+        video_ids=["v1"],
+        cache={},
+        client=client,
+        model="gemini-test",
+        max_per_run=5,
+    )
+
+    assert ok == 1
+    assert "v1" in result
+    assert result["v1"]["topic"] == "Engineer"
 
 
 @patch("yt_processor.time.sleep")
