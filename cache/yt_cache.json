@@ -1,1 +1,12 @@
-{}
+{
+  "Zk9LxO_dB64": {
+    "video_id": "Zk9LxO_dB64",
+    "url": "https://www.youtube.com/watch?v=Zk9LxO_dB64",
+    "status": "ok",
+    "analysis": "**Titolo:** Come Diventare un AI Engineer (Roadmap Completa)\n**Canale:** Tech With Tim\n**Durata stimata:** 11 minuti e 37 secondi\n**Argomento principale:** Una roadmap pratica e strutturata in 10 passaggi per diventare un ingegnere AI partendo da zero, focalizzandosi sulle competenze realmente richieste dal mercato.\n\n**Punti chiave:**\n- **Basi solide di Python:** Padroneggiare funzioni, classi, richieste HTTP e manipolazione di JSON prima di toccare qualsiasi strumento AI.\n- **Modelli Mentali dei LLM & API:** Comprendere token, finestre di contesto e ruoli (system/user/assistant), imparando a effettuare chiamate API dirette (OpenAI/Anthropic) e a gestire gli errori.\n- **Prompt Engineering e RAG:** Utilizzare output strutturati (JSON mode, function calling) e implementare sistemi RAG (Retrieval-Augmented Generation) con database vettoriali (Pinecone, Chroma).\n- **Orchestrazione e LLMOps:** Passare da chiamate singole a flussi complessi con LangChain/LlamaIndex, affrontando poi la messa in produzione (rate limit, caching, monitoraggio e gestione costi).\n- **Portfolio e Strumenti AI:** Costruire progetti reali (non tutorial generici) e moltiplicare la propria produttività di sviluppo utilizzando coding agent (come Cursor o Claude Code).\n\n**Builder ROI:** 4/5 — Molto utile per chi vuole lanciare e monetizzare prodotti AI nel mercato italiano, poiché insegna come strutturare i dati (RAG) e gestire i costi di produzione (LLMOps), elementi chiave per un solopreneur.\n\n**Engineer ROI:** 5/5 — Eccellente per gli sviluppatori che vogliono evolvere verso il coding agentico e l'ingegneria del software moderna, offrendo un percorso chiaro su come integrare LLM, orchestratori e tool di sviluppo AI nel proprio workflow.\n\n**Topic dominante:** Entrambi\n\n**Vale il tempo?** ⭐⭐⭐⭐⭐\n\n**Perché:** Il video è una sintesi densa, priva di fuffa e focalizzata sulla pratica. Beneficia sia il Builder che vuole creare soluzioni robuste, sia l'Engineer che deve comprendere l'architettura software dietro l'intelligenza artificiale generativa.\n\n**Tag:** #AI #Python #RAG #SoftwareEngineering #LLMOps",
+    "rating": 5,
+    "topic": "Entrambi",
+    "title": "Come Diventare un AI Engineer (Roadmap Completa)",
+    "processed_at": "2026-06-05T14:46:31"
+  }
+}
