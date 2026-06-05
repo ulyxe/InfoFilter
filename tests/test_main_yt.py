@@ -21,7 +21,7 @@ import main_yt
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _make_entry(video_id: str, rating: int, days_ago: int = 0) -> dict:
+def _make_entry(video_id: str, rating: int, days_ago: int = 0, topic: str = "Builder") -> dict:
     """Build a minimal cache entry."""
     dt = datetime.now(timezone.utc) - timedelta(days=days_ago)
     return {
@@ -30,6 +30,7 @@ def _make_entry(video_id: str, rating: int, days_ago: int = 0) -> dict:
         "status": "ok",
         "analysis": f"**Titolo:** Video {video_id}\n**Vale il tempo?** {'⭐' * rating}\n",
         "rating": rating,
+        "topic": topic,
         "title": f"Video {video_id}",
         "processed_at": dt.isoformat(timespec="seconds"),
     }
@@ -213,6 +214,37 @@ class TestReportMode:
 
         subject = mock_send.call_args[0][0]
         assert expected_date in subject
+
+    def test_report_mode_html_contains_topic_badge(self, tmp_path, monkeypatch):
+        """HTML email cards include a colored topic badge for each entry."""
+        cache_path = tmp_path / "cache" / "yt_cache.json"
+        monkeypatch.setattr(main_yt, "_CACHE_PATH", cache_path)
+        monkeypatch.setattr(main_yt, "_TEMPLATE_PATH", tmp_path / "no_template.html")
+
+        recent_cache = {
+            "b1": _make_entry("b1", 4, days_ago=1, topic="Builder"),
+            "e1": _make_entry("e1", 3, days_ago=1, topic="Engineer"),
+            "x1": _make_entry("x1", 2, days_ago=1, topic="—"),
+        }
+
+        captured_html: list[str] = []
+
+        def fake_send_digest(subject, html, plain):
+            captured_html.append(html)
+
+        with (
+            patch("main_yt.load_cache", return_value=recent_cache),
+            patch("main_yt.send_digest", side_effect=fake_send_digest),
+        ):
+            main_yt.run_report()
+
+        assert captured_html, "send_digest was not called"
+        html = captured_html[0]
+        assert "#f97316" in html, "Builder badge color missing"
+        assert "#3b82f6" in html, "Engineer badge color missing"
+        assert "#64748b" in html, "Fallback badge color missing"
+        assert "🏗" in html, "Builder emoji missing"
+        assert "⚙️" in html, "Engineer emoji missing"
 
 
 # ---------------------------------------------------------------------------

@@ -132,15 +132,28 @@ def run_report() -> None:
 
     sorted_entries = sorted(recent_entries, key=lambda e: e.get("rating", 0), reverse=True)
 
+    _TOPIC_BADGE = {
+        "Builder":  ("🏗",  "#f97316"),
+        "Engineer": ("⚙️", "#3b82f6"),
+        "Entrambi": ("🔀",  "#22c55e"),
+        "—":        ("—",   "#64748b"),
+    }
+
     # Render HTML from template (falls back to plaintext if template missing)
     if _TEMPLATE_PATH.exists():
         video_cards_html = ""
         for entry in sorted_entries:
             stars = "⭐" * entry.get("rating", 0)
+            topic = entry.get("topic", "—")
+            emoji, color = _TOPIC_BADGE.get(topic, ("—", "#64748b"))
+            badge = (
+                f'<span style="font-size:11px;font-weight:bold;color:{color};">'
+                f'{emoji} {topic}</span>'
+            )
             analysis_html = entry.get("analysis", "").replace("\n", "<br>")
             video_cards_html += f"""
             <div style="background:#1e293b;padding:20px;margin:12px 0;border-radius:6px;border-left:3px solid #ef4444;">
-              <div style="font-size:11px;color:#ef4444;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">{stars}</div>
+              <div style="margin-bottom:6px;">{badge}&nbsp;&nbsp;<span style="font-size:11px;color:#ef4444;">{stars}</span></div>
               <h3 style="margin:0 0 8px 0;"><a href="{entry.get('url','#')}" style="color:#f87171;text-decoration:none;">{entry.get('title','')}</a></h3>
               <p style="color:#94a3b8;margin:0;font-size:13px;">{analysis_html}</p>
             </div>"""
@@ -155,7 +168,10 @@ def run_report() -> None:
         html = (
             f"<h2>YouTube Digest — {date_str}</h2>"
             + "".join(
-                f"<p><strong>{'⭐' * e.get('rating',0)}</strong> — "
+                f"<p>"
+                f'<span style="color:{_TOPIC_BADGE.get(e.get("topic","—"), ("—","#64748b"))[1]};">'
+                f'{_TOPIC_BADGE.get(e.get("topic","—"), ("🏗","#f97316"))[0]} {e.get("topic","—")}</span> '
+                f"<strong>{'⭐' * e.get('rating',0)}</strong> — "
                 f"<a href='{e.get('url','#')}'>{e.get('title','')}</a></p>"
                 for e in sorted_entries
             )
