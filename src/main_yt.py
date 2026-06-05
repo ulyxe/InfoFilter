@@ -12,7 +12,6 @@ Run from repo root:
 from __future__ import annotations
 
 import argparse
-import re
 import os
 import sys
 from datetime import datetime, timedelta, timezone
@@ -52,6 +51,29 @@ _TOPIC_BADGE = {
     "Entrambi": ("🔀",  "#22c55e"),
     "—":        ("—",   "#64748b"),
 }
+
+
+def _parse_yt_analysis(analysis: str) -> dict:
+    """Extract structured fields from a Gemini analysis string."""
+    fields: dict = {"argomento": "", "punti": [], "perche": ""}
+    in_punti = False
+    for line in analysis.splitlines():
+        s = line.strip()
+        if s.startswith("**Argomento principale:**"):
+            fields["argomento"] = s.split(":**", 1)[-1].strip().strip("[]")
+            in_punti = False
+        elif s.startswith("**Punti chiave:**"):
+            in_punti = True
+        elif in_punti and s.startswith("- "):
+            fields["punti"].append(s[2:].strip())
+        elif in_punti and s.startswith("**"):
+            in_punti = False
+            if s.startswith("**Perché:**"):
+                fields["perche"] = s.split(":**", 1)[-1].strip().strip("[]")
+        elif s.startswith("**Perché:**"):
+            fields["perche"] = s.split(":**", 1)[-1].strip().strip("[]")
+            in_punti = False
+    return fields
 
 
 # ---------------------------------------------------------------------------
@@ -151,15 +173,18 @@ def run_report() -> None:
                 f'<span style="font-size:11px;font-weight:bold;color:{color};">'
                 f'{emoji} {topic}</span>'
             )
-            analysis_html = re.sub(
-                r'\*\*(.+?)\*\*', r'<strong>\1</strong>',
-                entry.get("analysis", "")
-            ).replace("\n", "<br>")
+            f = _parse_yt_analysis(entry.get("analysis", ""))
+            punti_html = "".join(
+                f'<li style="color:#94a3b8;margin:3px 0;font-size:13px;">{p}</li>'
+                for p in f["punti"]
+            )
             video_cards_html += f"""
             <div style="background:#1e293b;padding:20px;margin:12px 0;border-radius:6px;border-left:3px solid #ef4444;">
               <div style="margin-bottom:6px;">{badge}&nbsp;&nbsp;<span style="font-size:11px;color:#ef4444;">{stars}</span></div>
               <h3 style="margin:0 0 8px 0;"><a href="{entry.get('url','#')}" style="color:#f87171;text-decoration:none;">{entry.get('title','')}</a></h3>
-              <p style="color:#94a3b8;margin:0;font-size:13px;">{analysis_html}</p>
+              {f'<p style="color:#cbd5e1;margin:0 0 8px 0;font-size:14px;">{f["argomento"]}</p>' if f["argomento"] else ""}
+              {f'<ul style="margin:4px 0 8px 0;padding-left:16px;">{punti_html}</ul>' if punti_html else ""}
+              {f'<p style="color:#94a3b8;font-size:13px;margin:0;font-style:italic;">💡 {f["perche"]}</p>' if f["perche"] else ""}
             </div>"""
 
         template = Template(_TEMPLATE_PATH.read_text(encoding="utf-8"))
