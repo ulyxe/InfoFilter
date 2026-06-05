@@ -21,13 +21,10 @@ def fetch_playlist_ids(playlist_id: str, api_key: str) -> list[str]:
     next_page_token = None
 
     while True:
-        request = youtube.playlistItems().list(
-            playlistId=playlist_id,
-            part="snippet",
-            maxResults=50,
-            pageToken=next_page_token
-        )
-        response = request.execute()
+        params = {"playlistId": playlist_id, "part": "snippet", "maxResults": 50}
+        if next_page_token:
+            params["pageToken"] = next_page_token
+        response = youtube.playlistItems().list(**params).execute()
 
         # Extract video IDs from this page
         for item in response.get("items", []):
