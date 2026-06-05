@@ -206,16 +206,19 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    try:
-        if args.mode == "fetch":
-            run_fetch()
-        else:
+    if args.mode == "fetch":
+        # YouTube API errors propagate uncaught → action fails (exit 1 via unhandled exception).
+        # Gemini quota/timeout errors are handled inside process_new_videos, so run_fetch()
+        # completes normally (exit 0) even when quota is exhausted.
+        run_fetch()
+    else:
+        try:
             run_report()
-    except SystemExit:
-        raise
-    except Exception as exc:  # noqa: BLE001
-        print(f"[ERROR] Unhandled exception in --mode={args.mode}: {exc}", flush=True)
-        sys.exit(0)
+        except SystemExit:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            print(f"[ERROR] Unhandled exception in --mode=report: {exc}", flush=True)
+            sys.exit(0)
 
 
 if __name__ == "__main__":

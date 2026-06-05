@@ -213,3 +213,49 @@ class TestReportMode:
 
         subject = mock_send.call_args[0][0]
         assert expected_date in subject
+
+
+# ---------------------------------------------------------------------------
+# Error handling tests
+# ---------------------------------------------------------------------------
+
+class TestErrorHandling:
+    def test_fetch_mode_youtube_api_error_propagates(self, tmp_path, monkeypatch):
+        """YouTube API errors must propagate (exit 1), not be swallowed."""
+        config_path = tmp_path / "config" / "yt_config.yaml"
+        config_path.parent.mkdir(parents=True)
+        config_path.write_text(
+            "playlist_id: PLtest\nmax_per_run: 5\nmodel: gemini-test\n",
+            encoding="utf-8",
+        )
+        monkeypatch.setattr(main_yt, "_CONFIG_PATH", config_path)
+        monkeypatch.setattr(main_yt, "_CACHE_PATH", tmp_path / "cache.json")
+        monkeypatch.setenv("YOUTUBE_API_KEY", "fake_yt_key")
+        monkeypatch.setenv("GEMINI_API_KEY", "fake_gemini_key")
+
+        with patch("main_yt.fetch_playlist_ids", side_effect=RuntimeError("YouTube API unreachable")):
+            with pytest.raises(RuntimeError, match="YouTube API unreachable"):
+                main_yt.run_fetch()
+
+    def test_report_mode_smtp_error_exits_0(self, tmp_path, monkeypatch):
+        """SMTP errors in report mode should exit 0 (not fail the action)."""
+        cache_path = tmp_path / "cache" / "yt_cache.json"
+        monkeypatch.setattr(main_yt, "_CACHE_PATH", cache_path)
+        monkeypatch.setattr(main_yt, "_TEMPLATE_PATH", tmp_path / "no_template.html")
+
+        recent_cache = {"vid1": _make_entry("vid1", 4, days_ago=1)}
+
+        parser = __import__("argparse").ArgumentParser()
+        parser.add_argument("--mode", default="report")
+        fake_args = parser.parse_args([])
+        fake_args.mode = "report"
+
+        with (
+            patch("main_yt.load_cache", return_value=recent_cache),
+            patch("main_yt.send_digest", side_effect=OSError("SMTP connection refused")),
+            patch("main_yt.argparse") as mock_argparse,
+        ):
+            mock_argparse.ArgumentParser.return_value.parse_args.return_value = fake_args
+            with pytest.raises(SystemExit) as exc_info:
+                main_yt.main()
+        assert exc_info.value.code == 0
