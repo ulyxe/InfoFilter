@@ -15,11 +15,13 @@ import argparse
 import os
 import sys
 from datetime import datetime, timedelta, timezone
+from html import escape
 from pathlib import Path
 from string import Template
 
 import yaml
 
+from email_sender import send_digest
 from yt_fetcher import fetch_playlist_ids
 from yt_processor import (
     REQUEST_TIMEOUT_MS,
@@ -27,7 +29,6 @@ from yt_processor import (
     process_new_videos,
     save_cache,
 )
-from email_sender import send_digest
 
 try:
     from google import genai
@@ -125,7 +126,8 @@ def run_fetch() -> None:
     )
 
     save_cache(updated_cache, _CACHE_PATH)
-    print(f"[INFO] Processed: {ok_count} ok, {failed_count} failed", flush=True)
+    print(
+        f"[INFO] Processed: {ok_count} ok, {failed_count} failed", flush=True)
     print(f"[INFO] Cache updated at {_CACHE_PATH}", flush=True)
 
 
@@ -160,7 +162,8 @@ def run_report() -> None:
         print("No new videos this week, skipping email", flush=True)
         return
 
-    sorted_entries = sorted(recent_entries, key=lambda e: e.get("rating", 0), reverse=True)
+    sorted_entries = sorted(
+        recent_entries, key=lambda e: e.get("rating", 0), reverse=True)
 
     # Render HTML from template (falls back to plaintext if template missing)
     if _TEMPLATE_PATH.exists():
@@ -175,16 +178,16 @@ def run_report() -> None:
             )
             f = _parse_yt_analysis(entry.get("analysis", ""))
             punti_html = "".join(
-                f'<li style="color:#94a3b8;margin:3px 0;font-size:13px;">{p}</li>'
+                f'<li style="color:#94a3b8;margin:3px 0;font-size:13px;">{escape(p)}</li>'
                 for p in f["punti"]
             )
             video_cards_html += f"""
             <div style="background:#1e293b;padding:20px;margin:12px 0;border-radius:6px;border-left:3px solid #ef4444;">
               <div style="margin-bottom:6px;">{badge}&nbsp;&nbsp;<span style="font-size:11px;color:#ef4444;">{stars}</span></div>
-              <h3 style="margin:0 0 8px 0;"><a href="{entry.get('url','#')}" style="color:#f87171;text-decoration:none;">{entry.get('title','')}</a></h3>
-              {f'<p style="color:#cbd5e1;margin:0 0 8px 0;font-size:14px;">{f["argomento"]}</p>' if f["argomento"] else ""}
+              <h3 style="margin:0 0 8px 0;"><a href="{entry.get('url', '#')}" style="color:#f87171;text-decoration:none;">{escape(entry.get('title', ''))}</a></h3>
+              {f'<p style="color:#cbd5e1;margin:0 0 8px 0;font-size:14px;">{escape(f["argomento"])}</p>' if f["argomento"] else ""}
               {f'<ul style="margin:4px 0 8px 0;padding-left:16px;">{punti_html}</ul>' if punti_html else ""}
-              {f'<p style="color:#94a3b8;font-size:13px;margin:0;font-style:italic;">💡 {f["perche"]}</p>' if f["perche"] else ""}
+              {f'<p style="color:#94a3b8;font-size:13px;margin:0;font-style:italic;">💡 {escape(f["perche"])}</p>' if f["perche"] else ""}
             </div>"""
 
         template = Template(_TEMPLATE_PATH.read_text(encoding="utf-8"))
@@ -205,8 +208,8 @@ def run_report() -> None:
                     f"<p>"
                     f'<span style="color:{color};">'
                     f'{emoji} {topic}</span> '
-                    f"<strong>{'⭐' * e.get('rating',0)}</strong> — "
-                    f"<a href='{e.get('url','#')}'>{e.get('title','')}</a></p>"
+                    f"<strong>{'⭐' * e.get('rating', 0)}</strong> — "
+                    f"<a href='{e.get('url', '#')}'>{e.get('title', '')}</a></p>"
                 )[-1]
                 for e in sorted_entries
             )
@@ -218,7 +221,8 @@ def run_report() -> None:
     ])
 
     send_digest(subject, html, plain)
-    print(f"[INFO] YouTube Digest sent. Videos: {len(sorted_entries)}", flush=True)
+    print(
+        f"[INFO] YouTube Digest sent. Videos: {len(sorted_entries)}", flush=True)
 
 
 # ---------------------------------------------------------------------------
@@ -246,7 +250,8 @@ def main() -> None:
         except SystemExit:
             raise
         except Exception as exc:  # noqa: BLE001
-            print(f"[ERROR] Unhandled exception in --mode=report: {exc}", flush=True)
+            print(
+                f"[ERROR] Unhandled exception in --mode=report: {exc}", flush=True)
             sys.exit(0)
 
 
