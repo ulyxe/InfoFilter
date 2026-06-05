@@ -212,3 +212,86 @@ def test_process_new_videos_skips_on_error(mock_sleep):
     # Success video IS cached
     assert "ok_vid" in result
     assert result["ok_vid"]["status"] == "ok"
+
+
+# ---------------------------------------------------------------------------
+# load_cache – corrupt JSON
+# ---------------------------------------------------------------------------
+
+def test_load_cache_corrupt_json(tmp_path):
+    """Returns {} when the file contains invalid JSON."""
+    cache_file = tmp_path / "corrupt.json"
+    cache_file.write_text("not json", encoding="utf-8")
+    result = yt_processor.load_cache(cache_file)
+    assert result == {}
+
+
+# ---------------------------------------------------------------------------
+# analyze_video
+# ---------------------------------------------------------------------------
+
+def test_analyze_video_returns_text(monkeypatch):
+    """analyze_video returns the text from a successful API response."""
+    expected = "**Titolo:** Test\n**Vale il tempo?** ⭐⭐⭐"
+    client = MagicMock()
+    response = MagicMock()
+    response.text = expected
+    client.models.generate_content.return_value = response
+
+    result = yt_processor.analyze_video(client, "https://youtube.com/watch?v=test", "gemini-3.5-flash")
+    assert result == expected
+
+
+def test_analyze_video_empty_response_raises(monkeypatch):
+    """analyze_video raises RuntimeError when the response text is empty."""
+    client = MagicMock()
+    response = MagicMock()
+    response.text = ""
+    client.models.generate_content.return_value = response
+
+    with pytest.raises(RuntimeError):
+        yt_processor.analyze_video(client, "https://youtube.com/watch?v=test", "gemini-3.5-flash")
+
+
+def test_analyze_video_retries_on_retryable_error(monkeypatch):
+    """analyze_video retries once on a retryable error and returns the second call's text."""
+    monkeypatch.setattr(yt_processor.time, "sleep", lambda _: None)
+
+    expected = "**Titolo:** Retry Success\n**Vale il tempo?** ⭐⭐"
+    call_count = 0
+
+    def generate_content(model, contents):
+        nonlocal call_count
+        call_count += 1
+        if call_count == 1:
+            raise Exception("Request timed out")
+        resp = MagicMock()
+        resp.text = expected
+        return resp
+
+    client = MagicMock()
+    client.models.generate_content.side_effect = generate_content
+
+    result = yt_processor.analyze_video(client, "https://youtube.com/watch?v=test", "gemini-3.5-flash")
+    assert result == expected
+    assert call_count == 2
+
+
+def test_analyze_video_no_retry_on_fatal_error(monkeypatch):
+    """analyze_video raises immediately on a non-retryable error without retrying."""
+    monkeypatch.setattr(yt_processor.time, "sleep", lambda _: None)
+
+    call_count = 0
+
+    def generate_content(model, contents):
+        nonlocal call_count
+        call_count += 1
+        raise RuntimeError("some fatal non-retryable error")
+
+    client = MagicMock()
+    client.models.generate_content.side_effect = generate_content
+
+    with pytest.raises(RuntimeError, match="some fatal non-retryable error"):
+        yt_processor.analyze_video(client, "https://youtube.com/watch?v=test", "gemini-3.5-flash")
+
+    assert call_count == 1
