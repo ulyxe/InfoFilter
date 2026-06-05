@@ -45,6 +45,13 @@ _CONFIG_PATH = _ROOT / "config" / "yt_config.yaml"
 _CACHE_PATH = _ROOT / "cache" / "yt_cache.json"
 _TEMPLATE_PATH = _ROOT / "templates" / "email_yt.html"
 
+_TOPIC_BADGE = {
+    "Builder":  ("🏗",  "#f97316"),
+    "Engineer": ("⚙️", "#3b82f6"),
+    "Entrambi": ("🔀",  "#22c55e"),
+    "—":        ("—",   "#64748b"),
+}
+
 
 # ---------------------------------------------------------------------------
 # Fetch mode
@@ -132,13 +139,6 @@ def run_report() -> None:
 
     sorted_entries = sorted(recent_entries, key=lambda e: e.get("rating", 0), reverse=True)
 
-    _TOPIC_BADGE = {
-        "Builder":  ("🏗",  "#f97316"),
-        "Engineer": ("⚙️", "#3b82f6"),
-        "Entrambi": ("🔀",  "#22c55e"),
-        "—":        ("—",   "#64748b"),
-    }
-
     # Render HTML from template (falls back to plaintext if template missing)
     if _TEMPLATE_PATH.exists():
         video_cards_html = ""
@@ -168,11 +168,17 @@ def run_report() -> None:
         html = (
             f"<h2>YouTube Digest — {date_str}</h2>"
             + "".join(
-                f"<p>"
-                f'<span style="color:{_TOPIC_BADGE.get(e.get("topic","—"), ("—","#64748b"))[1]};">'
-                f'{_TOPIC_BADGE.get(e.get("topic","—"), ("🏗","#f97316"))[0]} {e.get("topic","—")}</span> '
-                f"<strong>{'⭐' * e.get('rating',0)}</strong> — "
-                f"<a href='{e.get('url','#')}'>{e.get('title','')}</a></p>"
+                (
+                    topic := e.get("topic", "—"),
+                    emoji_color := _TOPIC_BADGE.get(topic, ("—", "#64748b")),
+                    emoji := emoji_color[0],
+                    color := emoji_color[1],
+                    f"<p>"
+                    f'<span style="color:{color};">'
+                    f'{emoji} {topic}</span> '
+                    f"<strong>{'⭐' * e.get('rating',0)}</strong> — "
+                    f"<a href='{e.get('url','#')}'>{e.get('title','')}</a></p>"
+                )[-1]
                 for e in sorted_entries
             )
         )
