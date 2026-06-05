@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from html import escape
@@ -52,6 +53,17 @@ _TOPIC_BADGE = {
     "Entrambi": ("🔀",  "#22c55e"),
     "—":        ("—",   "#64748b"),
 }
+
+
+def _md_to_html(text: str) -> str:
+    """HTML-escape then convert inline markdown to HTML tags."""
+    text = escape(text)
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    text = re.sub(r'__(.+?)__', r'<strong>\1</strong>', text)
+    text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
+    text = re.sub(r'_(.+?)_', r'<em>\1</em>', text)
+    text = re.sub(r'`(.+?)`', r'<code style="background:#0f172a;padding:1px 4px;border-radius:3px;">\1</code>', text)
+    return text
 
 
 def _parse_yt_analysis(analysis: str) -> dict:
@@ -178,16 +190,16 @@ def run_report() -> None:
             )
             f = _parse_yt_analysis(entry.get("analysis", ""))
             punti_html = "".join(
-                f'<li style="color:#94a3b8;margin:3px 0;font-size:13px;">{escape(p)}</li>'
+                f'<li style="color:#94a3b8;margin:3px 0;font-size:13px;">{_md_to_html(p)}</li>'
                 for p in f["punti"]
             )
             video_cards_html += f"""
             <div style="background:#1e293b;padding:20px;margin:12px 0;border-radius:6px;border-left:3px solid #ef4444;">
               <div style="margin-bottom:6px;">{badge}&nbsp;&nbsp;<span style="font-size:11px;color:#ef4444;">{stars}</span></div>
               <h3 style="margin:0 0 8px 0;"><a href="{entry.get('url', '#')}" style="color:#f87171;text-decoration:none;">{escape(entry.get('title', ''))}</a></h3>
-              {f'<p style="color:#cbd5e1;margin:0 0 8px 0;font-size:14px;">{escape(f["argomento"])}</p>' if f["argomento"] else ""}
+              {f'<p style="color:#cbd5e1;margin:0 0 8px 0;font-size:14px;">{_md_to_html(f["argomento"])}</p>' if f["argomento"] else ""}
               {f'<ul style="margin:4px 0 8px 0;padding-left:16px;">{punti_html}</ul>' if punti_html else ""}
-              {f'<p style="color:#94a3b8;font-size:13px;margin:0;font-style:italic;">💡 {escape(f["perche"])}</p>' if f["perche"] else ""}
+              {f'<p style="color:#94a3b8;font-size:13px;margin:0;font-style:italic;">💡 {_md_to_html(f["perche"])}</p>' if f["perche"] else ""}
             </div>"""
 
         template = Template(_TEMPLATE_PATH.read_text(encoding="utf-8"))
