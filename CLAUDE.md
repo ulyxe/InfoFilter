@@ -64,3 +64,29 @@ entry points are run as `python src/main.py` from the repo root.
 
 Append a `{name, url, tags}` entry to the relevant `config/feeds_*.yaml`. No code
 change required.
+
+## YT Digest pipeline
+
+- YT Digest: daily 07:00 UTC (fetch) + weekly Sunday 08:00 UTC (email).
+
+Pipeline: `fetch playlist IDs (YouTube Data API)` → `analyze new videos via Gemini` →
+`commit cache/yt_cache.json` → (weekly) `render HTML email` → `send via SMTP`.
+
+Modules: `src/yt_fetcher.py`, `src/yt_processor.py`, `src/main_yt.py`,
+`config/yt_config.yaml`, `templates/email_yt.html`, `cache/yt_cache.json`.
+
+### Commands
+
+- Run fetch: `python src/main_yt.py --mode=fetch`
+- Run report: `python src/main_yt.py --mode=report`
+
+### YT Digest non-obvious decisions
+
+- **Model `gemini-3.5-flash`** is correct and current (June 2026). Do not "correct" it to 2.5/3.0.
+- **Cache saves successes only.** Failures are never cached so they are retried on the next run. Do not introduce error caching.
+- **Throttling, not logic, is the bottleneck.** YouTube ingestion is a preview feature with low quota. Failures often manifest as `read operation timed out`, NOT a clean 429. A video that fails in a batch run often succeeds alone — failure ≠ broken video.
+- **Three throttle defenses, do not remove:** `REQUEST_TIMEOUT_MS` (prevents infinite hang), retry with backoff in `analyze_video()` (handles transient stalls), `SLEEP_BETWEEN=30s` between calls (stays under throttle threshold). At 6s ~1/3 of videos failed; at 30s much more reliable.
+- **`MAX_ATTEMPTS=2` (one retry):** each attempt consumes one slot of the free daily quota (20 RPD). With 3 attempts you burn up to 3 slots per failing video. Keep at 2.
+- **`max_per_run=5` in `yt_config.yaml`:** quota guard — limits daily API calls to stay within the 20 RPD free tier even if the playlist grows large.
+- **`processed_at` timestamp in cache entries:** used by `--mode=report` to filter the last 7 days for the weekly email. Do not remove this field.
+- **`cache/yt_cache.json` is committed to the repo.** This is intentional — it is the persistence mechanism between GitHub Actions runs (ephemeral filesystem). Do not gitignore it.
