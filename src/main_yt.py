@@ -12,6 +12,7 @@ Run from repo root:
 from __future__ import annotations
 
 import argparse
+import re
 import os
 import sys
 from datetime import datetime, timedelta, timezone
@@ -150,7 +151,10 @@ def run_report() -> None:
                 f'<span style="font-size:11px;font-weight:bold;color:{color};">'
                 f'{emoji} {topic}</span>'
             )
-            analysis_html = entry.get("analysis", "").replace("\n", "<br>")
+            analysis_html = re.sub(
+                r'\*\*(.+?)\*\*', r'<strong>\1</strong>',
+                entry.get("analysis", "")
+            ).replace("\n", "<br>")
             video_cards_html += f"""
             <div style="background:#1e293b;padding:20px;margin:12px 0;border-radius:6px;border-left:3px solid #ef4444;">
               <div style="margin-bottom:6px;">{badge}&nbsp;&nbsp;<span style="font-size:11px;color:#ef4444;">{stars}</span></div>
