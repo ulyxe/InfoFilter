@@ -70,7 +70,7 @@ class TestFetchMode:
         with (
             patch("main_yt.fetch_playlist_ids", return_value=["vid1", "vid2"]) as mock_fetch,
             patch("main_yt.load_cache", return_value={}) as mock_load,
-            patch("main_yt.process_new_videos", return_value=returned_cache) as mock_process,
+            patch("main_yt.process_new_videos", return_value=(returned_cache, 2, 0)) as mock_process,
             patch("main_yt.save_cache") as mock_save,
             patch("main_yt.genai", mock_genai),
             patch("main_yt.types", MagicMock()),

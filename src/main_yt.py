@@ -86,35 +86,13 @@ def run_fetch() -> None:
         http_options=types.HttpOptions(timeout=REQUEST_TIMEOUT_MS),
     )
 
-    cache_before = set(cache.keys())
-    updated_cache = process_new_videos(
+    updated_cache, ok_count, failed_count = process_new_videos(
         video_ids=new_ids,
         cache=cache,
         client=client,
         model=model,
         max_per_run=max_per_run,
     )
-
-    newly_processed = [vid for vid in updated_cache if vid not in cache_before]
-    ok_count = len(newly_processed)
-    # process_new_videos iterates new_ids in order, attempts each uncached video,
-    # and stops after max_per_run successes. Failures don't count toward the cap.
-    # We count failures as new videos that were iterated but not cached:
-    # those are the new_ids up to the position where we reached max_per_run successes
-    # (or ran out of videos). Since we can't inspect internals, count how many of
-    # the first (ok_count + slack) new_ids remain uncached, where slack tracks
-    # that failures push the scan forward but don't add to ok_count.
-    # Simplest correct bound: videos still not in cache after the run, among those
-    # that appear before the last successfully processed video in new_ids order.
-    if newly_processed:
-        last_ok_pos = max(
-            new_ids.index(vid) for vid in newly_processed if vid in new_ids
-        )
-        failed_count = len(
-            [vid for vid in new_ids[: last_ok_pos + 1] if vid not in updated_cache]
-        )
-    else:
-        failed_count = 0
 
     save_cache(updated_cache, _CACHE_PATH)
     print(f"[INFO] Processed: {ok_count} ok, {failed_count} failed", flush=True)

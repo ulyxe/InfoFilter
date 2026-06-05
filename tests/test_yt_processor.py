@@ -123,7 +123,7 @@ def test_process_new_videos_skips_cached(mock_sleep):
     cache = {"cached_vid": {"status": "ok", "rating": 4, "title": "Cached"}}
     client = _make_mock_client()
 
-    result = yt_processor.process_new_videos(
+    result, ok, failed = yt_processor.process_new_videos(
         video_ids=["cached_vid"],
         cache=cache,
         client=client,
@@ -133,6 +133,8 @@ def test_process_new_videos_skips_cached(mock_sleep):
 
     client.models.generate_content.assert_not_called()
     assert "cached_vid" in result
+    assert ok == 0
+    assert failed == 0
 
 
 @patch("yt_processor.time.sleep")
@@ -140,7 +142,7 @@ def test_process_new_videos_respects_max_per_run(mock_sleep):
     """Stops after max_per_run successful analyses."""
     client = _make_mock_client()
 
-    result = yt_processor.process_new_videos(
+    result, ok, failed = yt_processor.process_new_videos(
         video_ids=["v1", "v2", "v3", "v4", "v5"],
         cache={},
         client=client,
@@ -150,6 +152,8 @@ def test_process_new_videos_respects_max_per_run(mock_sleep):
 
     assert client.models.generate_content.call_count == 2
     assert len([k for k in result if result[k]["status"] == "ok"]) == 2
+    assert ok == 2
+    assert failed == 0
 
 
 @patch("yt_processor.time.sleep")
@@ -157,7 +161,7 @@ def test_process_new_videos_adds_processed_at(mock_sleep):
     """Successful entries include a processed_at ISO timestamp."""
     client = _make_mock_client()
 
-    result = yt_processor.process_new_videos(
+    result, ok, failed = yt_processor.process_new_videos(
         video_ids=["v1"],
         cache={},
         client=client,
@@ -165,6 +169,8 @@ def test_process_new_videos_adds_processed_at(mock_sleep):
         max_per_run=5,
     )
 
+    assert ok == 1
+    assert failed == 0
     assert "v1" in result
     assert "processed_at" in result["v1"]
     # Validate it looks like an ISO timestamp (YYYY-MM-DDTHH:MM:SS)
@@ -199,7 +205,7 @@ def test_process_new_videos_skips_on_error(mock_sleep):
 
     client = _make_mock_client(side_effect=side_effect)
 
-    result = yt_processor.process_new_videos(
+    result, ok, failed = yt_processor.process_new_videos(
         video_ids=["fail_vid", "ok_vid"],
         cache={},
         client=client,
@@ -212,6 +218,8 @@ def test_process_new_videos_skips_on_error(mock_sleep):
     # Success video IS cached
     assert "ok_vid" in result
     assert result["ok_vid"]["status"] == "ok"
+    assert ok == 1
+    assert failed == 1
 
 
 # ---------------------------------------------------------------------------

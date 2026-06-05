@@ -161,7 +161,7 @@ def process_new_videos(
     client: "genai.Client",
     model: str,
     max_per_run: int,
-) -> dict:
+) -> tuple[dict, int, int]:
     """Process new videos not yet in cache, up to max_per_run successes.
 
     Args:
@@ -170,22 +170,34 @@ def process_new_videos(
         client: Gemini API client.
         model: Gemini model name.
         max_per_run: Maximum number of SUCCESSFUL analyses per run (quota guard).
+            Also caps total API *attempts* at max_per_run * MAX_ATTEMPTS to avoid
+            burning the entire daily quota when the playlist is large and calls fail.
 
     Returns:
-        Updated cache dict (same object, mutated in place).
+        Tuple of (updated_cache, ok_count, failed_count).
 
     Cache entries are only written for successful analyses. Errors are logged
     to stdout and skipped so they can be retried on the next run.
     """
     successes = 0
+    failures = 0
+    attempts = 0
+    max_attempts = max_per_run * MAX_ATTEMPTS  # hard cap on total API calls
 
     for video_id in video_ids:
         if video_id in cache:
             continue
         if successes >= max_per_run:
             break
+        if attempts >= max_attempts:
+            print(
+                f"[INFO] API attempt cap reached ({max_attempts}), stopping.",
+                flush=True,
+            )
+            break
 
         url = f"https://www.youtube.com/watch?v={video_id}"
+        attempts += 1
 
         try:
             analysis = analyze_video(client, url, model)
@@ -207,9 +219,10 @@ def process_new_videos(
             )
         except Exception as exc:  # noqa: BLE001
             print(f"[WARN] failed to process {video_id}: {exc}", flush=True)
+            failures += 1
             # Do NOT cache errors — they must be retried next run
 
         if successes < max_per_run:
             time.sleep(SLEEP_BETWEEN)
 
-    return cache
+    return cache, successes, failures
