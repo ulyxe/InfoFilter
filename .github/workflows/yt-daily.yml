@@ -1,0 +1,30 @@
+name: YT Digest — Daily Fetch
+on:
+  schedule:
+    - cron: '0 7 * * *'    # every day at 07:00 UTC
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30     # Gemini calls can take ~6-60s each; 5 videos + sleeps ≈ 5 min
+    permissions:
+      contents: write       # needed to commit cache back to repo
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Fetch and process videos
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python src/main_yt.py --mode=fetch
+      - name: Commit updated cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add cache/yt_cache.json
+          git diff --cached --quiet || git commit -m "chore: update yt cache [skip ci]"
+          git push
