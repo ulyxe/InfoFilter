@@ -133,6 +133,20 @@ def extract_title(analysis: str, fallback: str) -> str:
     return fallback
 
 
+def extract_topic(analysis: str) -> str:
+    """Extract dominant topic label from the '**Topic dominante:**' line."""
+    for line in analysis.splitlines():
+        if "Topic dominante" in line:
+            text = line.split(":", 1)[-1].strip().strip("[]").lower()
+            if "builder" in text:
+                return "Builder"
+            if "engineer" in text:
+                return "Engineer"
+            if "entrambi" in text:
+                return "Entrambi"
+    return "—"
+
+
 # --- Cache I/O ---------------------------------------------------------------
 
 def load_cache(path: Path) -> dict:

@@ -61,6 +61,52 @@ def test_extract_title_fallback():
 
 
 # ---------------------------------------------------------------------------
+# extract_topic
+# ---------------------------------------------------------------------------
+
+def test_extract_topic_builder():
+    analysis = (
+        "**Titolo:** Build an AI SaaS\n"
+        "**Builder ROI:** 5 — ottimo per monetizzare\n"
+        "**Engineer ROI:** 2 — poco rilevante per il coding\n"
+        "**Topic dominante:** Builder\n"
+        "**Vale il tempo?** ⭐⭐⭐⭐⭐\n"
+    )
+    assert yt_processor.extract_topic(analysis) == "Builder"
+
+
+def test_extract_topic_engineer():
+    analysis = (
+        "**Titolo:** Claude Code Deep Dive\n"
+        "**Builder ROI:** 2 — poco utile per il business\n"
+        "**Engineer ROI:** 5 — essenziale per agentic coding\n"
+        "**Topic dominante:** Engineer\n"
+        "**Vale il tempo?** ⭐⭐⭐⭐⭐\n"
+    )
+    assert yt_processor.extract_topic(analysis) == "Engineer"
+
+
+def test_extract_topic_entrambi():
+    analysis = (
+        "**Builder ROI:** 4 — utile per il business\n"
+        "**Engineer ROI:** 4 — utile per il coding\n"
+        "**Topic dominante:** Entrambi\n"
+        "**Vale il tempo?** ⭐⭐⭐⭐\n"
+    )
+    assert yt_processor.extract_topic(analysis) == "Entrambi"
+
+
+def test_extract_topic_not_found():
+    """Legacy analysis text without the 'Topic dominante' field returns '—'."""
+    analysis = (
+        "**Titolo:** Old Video\n"
+        "**Vale il tempo?** ⭐⭐⭐\n"
+        "**Perché:** vecchio formato\n"
+    )
+    assert yt_processor.extract_topic(analysis) == "—"
+
+
+# ---------------------------------------------------------------------------
 # load_cache / save_cache
 # ---------------------------------------------------------------------------
 
