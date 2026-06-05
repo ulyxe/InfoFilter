@@ -1,25 +1,42 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Weekly AI Digest (The Engineer)
+# Runs every Monday at 06:00 UTC and emails a digest about AI/coding topics.
+# Entry point: src/main.py
+# ─────────────────────────────────────────────────────────────────────────────
+
 name: Weekly AI Digest
 
 on:
   schedule:
-    - cron: '0 6 * * 1'
-  workflow_dispatch:
+    - cron: '0 7 * * 1'   # Every Monday at 06:00 UTC. Format: minute hour day month weekday
+                           # Weekday: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+                           # To change day/time, edit these two numbers (minute, hour) and/or weekday.
+  workflow_dispatch:       # Also allows manual trigger from GitHub UI (Actions tab → Run workflow)
 
 jobs:
   send-digest:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    runs-on: ubuntu-latest   # Uses a fresh Ubuntu VM provided by GitHub for free
+    timeout-minutes: 10      # Kills the job if it hangs for >10 min (guards against infinite loops)
+
     steps:
+      # 1. Check out the repo code so subsequent steps can read the source files
       - uses: actions/checkout@v5
+
+      # 2. Install Python 3.12 on the runner VM
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+
+      # 3. Install Python packages listed in requirements.txt (feedparser, groq, etc.)
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      # 4. Run the digest. Secrets are stored in GitHub → Settings → Secrets and variables.
+      #    They are injected as environment variables at runtime; never appear in logs.
       - name: Run digest
         env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          DIGEST_RECIPIENT_EMAIL: ${{ secrets.DIGEST_RECIPIENT_EMAIL }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}                     # Groq API key for summarisation
+          SMTP_USER: ${{ secrets.SMTP_USER }}                           # Gmail address used to send the email
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}                   # Gmail App Password (not your login password)
+          DIGEST_RECIPIENT_EMAIL: ${{ secrets.DIGEST_RECIPIENT_EMAIL }} # Who receives the digest
         run: python src/main.py

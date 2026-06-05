@@ -1,22 +1,43 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# YT Digest — Weekly Email
+# Runs every Sunday at 08:00 UTC. Reads cache/yt_cache.json (built by the daily
+# fetch job), renders an HTML email from the last 7 days of analysed videos,
+# and sends it via Gmail SMTP.
+# Entry point: src/main_yt.py --mode=report
+# ─────────────────────────────────────────────────────────────────────────────
+
 name: YT Digest — Weekly Email
+
 on:
   schedule:
-    - cron: '0 8 * * 0'    # every Sunday at 08:00 UTC
-  workflow_dispatch:
+    - cron: '0 7 * * 6'   # Every Sunday at 08:00 UTC. Format: minute hour day month weekday
+                           # Weekday 0 = Sunday. Change to 1-6 for Mon-Sat.
+                           # To change the time, edit the hour number (second field).
+  workflow_dispatch:       # Also allows manual trigger from GitHub UI (Actions tab → Run workflow)
 
 jobs:
   send:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 10    # Sending an email is fast; 10 min is a generous safety net.
+
     steps:
+      # 1. Check out the repo — this brings in the latest cache/yt_cache.json
+      #    that was committed by the daily fetch job throughout the week.
       - uses: actions/checkout@v5
+
+      # 2. Install Python 3.12
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+
+      # 3. Install dependencies
       - run: pip install -r requirements.txt
+
+      # 4. Build and send the email. No API keys needed here — the analysis was
+      #    already done by the daily job and persisted in the cache.
       - name: Send weekly digest
         env:
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          DIGEST_RECIPIENT_EMAIL: ${{ secrets.DIGEST_RECIPIENT_EMAIL }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}                           # Gmail address used to send the email
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}                   # Gmail App Password (not your login password)
+          DIGEST_RECIPIENT_EMAIL: ${{ secrets.DIGEST_RECIPIENT_EMAIL }} # Who receives the digest
         run: python src/main_yt.py --mode=report

@@ -1,30 +1,60 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# YT Digest — Daily Fetch
+# Runs every day at 07:00 UTC. Checks the configured YouTube playlists for new
+# videos, analyses them via Gemini, and persists results to cache/yt_cache.json
+# by committing directly back to the repo.
+# Entry point: src/main_yt.py --mode=fetch
+# ─────────────────────────────────────────────────────────────────────────────
+
 name: YT Digest — Daily Fetch
+
 on:
   schedule:
-    - cron: '0 7 * * *'    # every day at 07:00 UTC
-  workflow_dispatch:
+    - cron: '0 7 * * *'   # Every day at 07:00 UTC. Format: minute hour day month weekday
+                           # '*' in the weekday position means "every day of the week".
+                           # To change the time, edit the hour number (second field).
+  workflow_dispatch:       # Also allows manual trigger from GitHub UI (Actions tab → Run workflow)
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 30     # Gemini calls can take ~6-60s each; 5 videos + sleeps ≈ 5 min
+    timeout-minutes: 30    # Generous timeout: each Gemini call takes 6-60 s; 5 videos + 30 s
+                           # sleep between calls ≈ 5 min total. Set to 30 min for safety.
+
     permissions:
-      contents: write       # needed to commit cache back to repo
+      contents: write      # Required so the job can git-push the updated cache back to the repo.
+                           # Without this, the commit step would fail with a 403.
+
     steps:
+      # 1. Check out the repo (including the existing cache/yt_cache.json)
       - uses: actions/checkout@v5
+
+      # 2. Install Python 3.12
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+
+      # 3. Install dependencies
       - run: pip install -r requirements.txt
+
+      # 4. Run the fetch: reads YouTube playlists, calls Gemini to analyse new videos,
+      #    and writes results into cache/yt_cache.json (local to the runner).
       - name: Fetch and process videos
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}     # Gemini API key for video analysis
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}   # YouTube Data API key for playlist reads
         run: python src/main_yt.py --mode=fetch
+
+      # 5. Commit the updated cache back to the repo.
+      #    The cache IS the persistence layer — the runner VM is ephemeral and discarded
+      #    after the job, so without this commit the data would be lost.
+      #    [skip ci] in the commit message prevents this push from triggering another workflow run.
       - name: Commit updated cache
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add cache/yt_cache.json
           git diff --cached --quiet || git commit -m "chore: update yt cache [skip ci]"
+          # git diff --cached --quiet exits 0 (success) if there is nothing staged,
+          # so the || short-circuits: commit only runs when the cache actually changed.
           git push
