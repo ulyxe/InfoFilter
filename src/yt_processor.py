@@ -39,8 +39,11 @@ Analizza questo video YouTube e rispondi ESCLUSIVAMENTE in questo formato \
 - [punto 2]
 - [punto 3]
 - [punto 4 se rilevante]
-**Vale il tempo?** [voto 1-5 con emoji: 1=⭐ 2=⭐⭐ 3=⭐⭐⭐ 4=⭐⭐⭐⭐ 5=⭐⭐⭐⭐⭐]
-**Perché:** [1-2 frasi motivazione voto]
+**Builder ROI:** [1-5, una frase — rilevanza per costruire/monetizzare prodotti AI, solopreneurship, mercato italiano]
+**Engineer ROI:** [1-5, una frase — rilevanza per coding agentico, Claude Code, produttività di sviluppo]
+**Topic dominante:** [Builder | Engineer | Entrambi]
+**Vale il tempo?** [voto 1-5 con emoji: 1=⭐ 2=⭐⭐ 3=⭐⭐⭐ 4=⭐⭐⭐⭐ 5=⭐⭐⭐⭐⭐ — uguale al ROI del topic dominante]
+**Perché:** [1-2 frasi: quale topic beneficia di più e perché, oppure "off-topic" se nessuno dei due]
 **Tag:** [3-5 tag tematici es. #AI #produttività #tutorial]
 """
 
