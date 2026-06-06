@@ -38,7 +38,17 @@ Analizza questo video YouTube e rispondi ESCLUSIVAMENTE in questo formato \
 - [punto 1]
 - [punto 2]
 - [punto 3]
-- [punto 4 se rilevante]
+- [punto 4]
+- [punto 5]
+- [punto 6 se rilevante]
+- [punto 7 se rilevante]
+- [punto 8 se rilevante]
+**Strumenti e tecnologie:** [lista di tool/librerie/framework/servizi citati, separati da virgola, o "nessuno"]
+**Risorse consigliate:** [libri, corsi, link, paper menzionati, separati da virgola, o "nessuna"]
+**Metodologia:**
+- [passo 1 se il video è un tutorial/how-to con passi distinti]
+- [passo 2]
+- (scrivi solo "N/A" su riga singola se il video non ha una metodologia passo-passo)
 **Builder ROI:** [1-5, una frase — rilevanza per costruire/monetizzare prodotti AI, solopreneurship, mercato italiano]
 **Engineer ROI:** [1-5, una frase — rilevanza per coding agentico, Claude Code, produttività di sviluppo]
 **Topic dominante:** [Builder | Engineer | Entrambi]
