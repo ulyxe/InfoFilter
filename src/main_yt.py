@@ -23,6 +23,7 @@ from string import Template
 import yaml
 
 from email_sender import send_digest
+from yt_pdf import generate_digest_pdf
 from yt_fetcher import fetch_playlist_ids
 from yt_processor import (
     REQUEST_TIMEOUT_MS,
@@ -204,7 +205,6 @@ def run_report() -> None:
         if not processed_at_str:
             continue
         try:
-            # ISO format: "2025-06-01T12:34:56" (no tz) or with tz
             dt = datetime.fromisoformat(processed_at_str)
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
@@ -220,10 +220,13 @@ def run_report() -> None:
     sorted_entries = sorted(
         recent_entries, key=lambda e: e.get("rating", 0), reverse=True)
 
-    # Render HTML from template (falls back to plaintext if template missing)
+    # Pre-parse all analyses once
+    parsed = [_parse_yt_analysis(e.get("analysis", "")) for e in sorted_entries]
+
+    # --- Compact HTML body (ranking list) ---
     if _TEMPLATE_PATH.exists():
-        video_cards_html = ""
-        for entry in sorted_entries:
+        video_list_html = ""
+        for i, (entry, af) in enumerate(zip(sorted_entries, parsed), start=1):
             stars = "⭐" * entry.get("rating", 0)
             topic = entry.get("topic", "—")
             emoji, color = _TOPIC_BADGE.get(topic, ("—", "#64748b"))
@@ -231,84 +234,68 @@ def run_report() -> None:
                 f'<span style="font-size:11px;font-weight:bold;color:{color};">'
                 f'{emoji} {topic}</span>'
             )
-            af = _parse_yt_analysis(entry.get("analysis", ""))
-            punti_html = "".join(
-                f'<li style="color:#94a3b8;margin:4px 0;font-size:13px;">{_md_to_html(p)}</li>'
-                for p in af["punti"]
+            separator = (
+                '<hr style="border:none;border-top:1px solid #1e293b;margin:8px 0;">'
+                if i > 1 else ""
             )
-            meta_parts = [s for s in [escape(af["canale"]), escape(af["durata"])] if s]
-            meta_html = (
-                f'<div style="font-size:12px;color:#64748b;margin-bottom:10px;">'
-                f'{"&nbsp;·&nbsp;".join(meta_parts)}</div>'
-                if meta_parts else ""
+            argomento_html = (
+                f'<p style="color:#cbd5e1;margin:2px 0;font-size:13px;">'
+                f'{_md_to_html(af["argomento"])}</p>'
+                if af["argomento"] else ""
             )
-            roi_rows = ""
-            if af["builder_roi"]:
-                roi_rows += (
-                    f'<div style="margin-bottom:5px;">'
-                    f'<span style="font-size:11px;font-weight:bold;color:#f97316;">🏗 Builder ROI</span>'
-                    f'&nbsp;<span style="color:#cbd5e1;font-size:13px;">{_md_to_html(af["builder_roi"])}</span>'
-                    f'</div>'
-                )
-            if af["engineer_roi"]:
-                roi_rows += (
-                    f'<div>'
-                    f'<span style="font-size:11px;font-weight:bold;color:#3b82f6;">⚙️ Engineer ROI</span>'
-                    f'&nbsp;<span style="color:#cbd5e1;font-size:13px;">{_md_to_html(af["engineer_roi"])}</span>'
-                    f'</div>'
-                )
-            roi_html = (
-                f'<div style="background:#0f172a;border-radius:4px;padding:10px 12px;margin:0 0 10px 0;">'
-                f'{roi_rows}</div>'
-                if roi_rows else ""
+            perche_html = (
+                f'<p style="color:#94a3b8;font-size:12px;margin:2px 0;font-style:italic;">'
+                f'&#128161; {_md_to_html(af["perche"])}</p>'
+                if af["perche"] else ""
             )
-            tags_html = (
-                f'<div style="font-size:11px;color:#475569;margin-top:6px;">{escape(af["tags"])}</div>'
-                if af["tags"] else ""
-            )
-            video_cards_html += f"""
-            <div style="background:#1e293b;padding:20px;margin:12px 0;border-radius:6px;border-left:3px solid #ef4444;">
-              <div style="margin-bottom:6px;">{badge}&nbsp;&nbsp;<span style="font-size:13px;color:#ef4444;">{stars}</span></div>
-              <h3 style="margin:0 0 4px 0;"><a href="{entry.get('url', '#')}" style="color:#f87171;text-decoration:none;">{escape(entry.get('title', ''))}</a></h3>
-              {meta_html}
-              {f'<p style="color:#cbd5e1;margin:0 0 8px 0;font-size:14px;">{_md_to_html(af["argomento"])}</p>' if af["argomento"] else ""}
-              {f'<ul style="margin:4px 0 10px 0;padding-left:16px;">{punti_html}</ul>' if punti_html else ""}
-              {roi_html}
-              {f'<p style="color:#94a3b8;font-size:13px;margin:0 0 6px 0;font-style:italic;">💡 {_md_to_html(af["perche"])}</p>' if af["perche"] else ""}
-              {tags_html}
+            video_list_html += f"""{separator}
+            <div style="padding:12px 0;">
+              <div style="margin-bottom:4px;">{badge}&nbsp;&nbsp;<span style="color:#ef4444;font-size:13px;">{stars}</span></div>
+              <h3 style="margin:0 0 4px 0;font-size:15px;">
+                <span style="color:#64748b;font-size:12px;">#{i}</span>&nbsp;
+                <a href="{entry.get('url', '#')}" style="color:#f87171;text-decoration:none;">{escape(entry.get('title', ''))}</a>
+              </h3>
+              {argomento_html}
+              {perche_html}
             </div>"""
 
         template = Template(_TEMPLATE_PATH.read_text(encoding="utf-8"))
         html = template.substitute(
             date=date_str,
             video_count=len(sorted_entries),
-            video_cards=video_cards_html,
+            video_list=video_list_html,
         )
     else:
         html = (
             f"<h2>YouTube Digest — {date_str}</h2>"
             + "".join(
-                (
-                    topic := e.get("topic", "—"),
-                    emoji_color := _TOPIC_BADGE.get(topic, ("—", "#64748b")),
-                    emoji := emoji_color[0],
-                    color := emoji_color[1],
-                    f"<p>"
-                    f'<span style="color:{color};">'
-                    f'{emoji} {topic}</span> '
-                    f"<strong>{'⭐' * e.get('rating', 0)}</strong> — "
-                    f"<a href='{e.get('url', '#')}'>{e.get('title', '')}</a></p>"
-                )[-1]
+                f"<p><strong>{'⭐' * e.get('rating', 0)}</strong> — "
+                f"<a href='{e.get('url', '#')}'>{e.get('title', '')}</a></p>"
                 for e in sorted_entries
             )
         )
 
+    # --- Plain text body ---
     plain = f"YouTube Digest — {date_str}\n\n" + "\n".join([
-        f"⭐ {entry['rating']}/5 — {entry['title']}\n  {entry['url']}"
-        for entry in sorted_entries
-    ])
+        f"#{i}  {'*' * e.get('rating', 0)} [{e.get('topic', '—')}]  {e.get('title', '')}\n"
+        f"  {e.get('url', '')}"
+        for i, e in enumerate(sorted_entries, start=1)
+    ]) + "\n\n(Il summary completo e' allegato come PDF.)"
 
-    send_digest(subject, html, plain)
+    # --- PDF attachment ---
+    pdf_entries = [
+        {
+            "title": e.get("title", ""),
+            "url": e.get("url", ""),
+            "rating": e.get("rating", 0),
+            "topic": e.get("topic", "—"),
+            **af,
+        }
+        for e, af in zip(sorted_entries, parsed)
+    ]
+    pdf_bytes = generate_digest_pdf(pdf_entries, date_str)
+
+    send_digest(subject, html, plain, pdf_attachment=pdf_bytes)
     print(
         f"[INFO] YouTube Digest sent. Videos: {len(sorted_entries)}", flush=True)
 

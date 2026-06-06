@@ -178,7 +178,7 @@ class TestReportMode:
 
         captured_plain: list[str] = []
 
-        def fake_send_digest(subject, html, plain):
+        def fake_send_digest(subject, html, plain, **kwargs):
             captured_plain.append(plain)
 
         with (
@@ -220,7 +220,9 @@ class TestReportMode:
         """HTML email cards include a colored topic badge for each entry."""
         cache_path = tmp_path / "cache" / "yt_cache.json"
         monkeypatch.setattr(main_yt, "_CACHE_PATH", cache_path)
-        monkeypatch.setattr(main_yt, "_TEMPLATE_PATH", tmp_path / "no_template.html")
+        # Provide a real template so the template branch (with badges) is exercised
+        real_template = main_yt._ROOT / "templates" / "email_yt.html"
+        monkeypatch.setattr(main_yt, "_TEMPLATE_PATH", real_template)
 
         recent_cache = {
             "b1": _make_entry("b1", 4, days_ago=1, topic="Builder"),
@@ -230,7 +232,7 @@ class TestReportMode:
 
         captured_html: list[str] = []
 
-        def fake_send_digest(subject, html, plain):
+        def fake_send_digest(subject, html, plain, **kwargs):
             captured_html.append(html)
 
         with (
