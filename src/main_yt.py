@@ -71,6 +71,9 @@ def _parse_yt_analysis(analysis: str) -> dict:
     fields: dict = {
         "canale": "", "durata": "", "argomento": "",
         "punti": [],
+        "strumenti": [],
+        "risorse": [],
+        "metodologia": [],
         "builder_roi": "", "engineer_roi": "",
         "perche": "", "tags": "",
     }
@@ -81,26 +84,43 @@ def _parse_yt_analysis(analysis: str) -> dict:
         return None
 
     in_punti = False
+    in_metodologia = False
     for line in analysis.splitlines():
         s = line.strip()
         if not s:
             continue
 
         if (v := _extract(s, "**Canale:**")) is not None:
-            fields["canale"] = v; in_punti = False
+            fields["canale"] = v; in_punti = False; in_metodologia = False
         elif (v := _extract(s, "**Durata stimata:**")) is not None:
-            fields["durata"] = v; in_punti = False
+            fields["durata"] = v; in_punti = False; in_metodologia = False
         elif (v := _extract(s, "**Argomento principale:**")) is not None:
-            fields["argomento"] = v; in_punti = False
+            fields["argomento"] = v; in_punti = False; in_metodologia = False
         elif s.startswith("**Punti chiave:**"):
-            in_punti = True
+            in_punti = True; in_metodologia = False
         elif in_punti and s.startswith("- "):
             fields["punti"].append(s[2:].strip())
+        elif s.startswith("**Metodologia:**"):
+            in_punti = False; in_metodologia = True
         elif in_punti and s.startswith("**"):
             in_punti = False
+        elif in_metodologia and (s.upper() == "N/A" or s.startswith("**")):
+            in_metodologia = False
+        elif in_metodologia and s.startswith("- "):
+            fields["metodologia"].append(s[2:].strip())
+        elif in_metodologia and re.match(r"^\d+\.", s):
+            fields["metodologia"].append(re.sub(r"^\d+\.\s*", "", s))
 
-        if not in_punti:
-            if (v := _extract(s, "**Builder ROI:**")) is not None:
+        if not in_punti and not in_metodologia:
+            if (v := _extract(s, "**Strumenti e tecnologie:**")) is not None:
+                raw = v.strip()
+                if raw.lower() not in ("nessuno", "nessuna", "n/a", ""):
+                    fields["strumenti"] = [t.strip() for t in raw.split(",") if t.strip()]
+            elif (v := _extract(s, "**Risorse consigliate:**")) is not None:
+                raw = v.strip()
+                if raw.lower() not in ("nessuno", "nessuna", "n/a", ""):
+                    fields["risorse"] = [r.strip() for r in raw.split(",") if r.strip()]
+            elif (v := _extract(s, "**Builder ROI:**")) is not None:
                 fields["builder_roi"] = v
             elif (v := _extract(s, "**Engineer ROI:**")) is not None:
                 fields["engineer_roi"] = v

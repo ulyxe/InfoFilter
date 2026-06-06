@@ -15,6 +15,7 @@ if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
 import main_yt
+from main_yt import _parse_yt_analysis
 
 
 # ---------------------------------------------------------------------------
@@ -291,3 +292,116 @@ class TestErrorHandling:
             with pytest.raises(SystemExit) as exc_info:
                 main_yt.main()
         assert exc_info.value.code == 0
+
+
+# ---------------------------------------------------------------------------
+# _parse_yt_analysis tests
+# ---------------------------------------------------------------------------
+
+FULL_ANALYSIS = """\
+**Titolo:** Come Diventare un AI Engineer
+**Canale:** Tech With Tim
+**Durata stimata:** 11 minuti
+**Argomento principale:** Una roadmap pratica in 10 passaggi per diventare AI engineer.
+**Punti chiave:**
+- Basi solide di Python
+- Modelli Mentali dei LLM
+- Prompt Engineering e RAG
+**Strumenti e tecnologie:** Python, LangChain, Pinecone, Claude Code
+**Risorse consigliate:** Corso di DeepLearning.AI, Paper: Attention is All You Need
+**Metodologia:**
+- Impara Python di base
+- Comprendi le API dei LLM
+- Implementa un sistema RAG
+**Builder ROI:** 4/5 — Utile per monetizzare
+**Engineer ROI:** 5/5 — Essenziale per il coding
+**Topic dominante:** Entrambi
+**Vale il tempo?** ⭐⭐⭐⭐⭐
+**Perché:** Buono per tutti i profili
+**Tag:** #AI #Python #RAG
+"""
+
+
+def test_parse_strumenti():
+    result = _parse_yt_analysis(FULL_ANALYSIS)
+    assert result["strumenti"] == ["Python", "LangChain", "Pinecone", "Claude Code"]
+
+
+def test_parse_risorse():
+    result = _parse_yt_analysis(FULL_ANALYSIS)
+    assert result["risorse"] == [
+        "Corso di DeepLearning.AI",
+        "Paper: Attention is All You Need",
+    ]
+
+
+def test_parse_metodologia_bullets():
+    result = _parse_yt_analysis(FULL_ANALYSIS)
+    assert result["metodologia"] == [
+        "Impara Python di base",
+        "Comprendi le API dei LLM",
+        "Implementa un sistema RAG",
+    ]
+
+
+def test_parse_metodologia_numbered():
+    analysis = (
+        "**Punti chiave:**\n- punto 1\n"
+        "**Metodologia:**\n"
+        "1. Step uno\n"
+        "2. Step due\n"
+        "**Builder ROI:** 3/5 — ok\n"
+    )
+    result = _parse_yt_analysis(analysis)
+    assert result["metodologia"] == ["Step uno", "Step due"]
+
+
+def test_parse_metodologia_na():
+    analysis = (
+        "**Punti chiave:**\n- punto 1\n"
+        "**Metodologia:**\n"
+        "N/A\n"
+        "**Builder ROI:** 3/5 — ok\n"
+    )
+    result = _parse_yt_analysis(analysis)
+    assert result["metodologia"] == []
+
+
+def test_parse_strumenti_nessuno():
+    analysis = (
+        "**Punti chiave:**\n- punto 1\n"
+        "**Strumenti e tecnologie:** nessuno\n"
+        "**Risorse consigliate:** nessuna\n"
+        "**Builder ROI:** 3/5 — ok\n"
+    )
+    result = _parse_yt_analysis(analysis)
+    assert result["strumenti"] == []
+    assert result["risorse"] == []
+
+
+def test_parse_backward_compat_missing_fields():
+    """Vecchie entry senza i nuovi campi: liste vuote, nessun crash."""
+    old_analysis = (
+        "**Titolo:** Old Video\n"
+        "**Canale:** Chan\n"
+        "**Punti chiave:**\n- punto 1\n"
+        "**Builder ROI:** 3 — ok\n"
+        "**Vale il tempo?** ⭐⭐⭐\n"
+        "**Tag:** #AI\n"
+    )
+    result = _parse_yt_analysis(old_analysis)
+    assert result["strumenti"] == []
+    assert result["risorse"] == []
+    assert result["metodologia"] == []
+
+
+def test_parse_existing_fields_unchanged():
+    """I campi esistenti continuano a essere estratti correttamente."""
+    result = _parse_yt_analysis(FULL_ANALYSIS)
+    assert result["canale"] == "Tech With Tim"
+    assert result["durata"] == "11 minuti"
+    assert result["argomento"] == "Una roadmap pratica in 10 passaggi per diventare AI engineer."
+    assert len(result["punti"]) == 3
+    assert result["builder_roi"].startswith("4/5")
+    assert result["engineer_roi"].startswith("5/5")
+    assert result["tags"] == "#AI #Python #RAG"
