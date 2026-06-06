@@ -1,8 +1,6 @@
 """Generate a PDF summary for the YouTube Digest."""
 from __future__ import annotations
 
-import re
-
 from fpdf import FPDF
 
 
