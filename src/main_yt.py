@@ -108,7 +108,9 @@ def _parse_yt_analysis(analysis: str) -> dict:
         elif in_metodologia and (s.upper() == "N/A" or s.startswith("**")):
             in_metodologia = False
         elif in_metodologia and s.startswith("- "):
-            fields["metodologia"].append(s[2:].strip())
+            item = s[2:].strip()
+            if item.upper() != "N/A":
+                fields["metodologia"].append(item)
         elif in_metodologia and re.match(r"^\d+\.", s):
             fields["metodologia"].append(re.sub(r"^\d+\.\s*", "", s))
 

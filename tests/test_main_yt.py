@@ -369,6 +369,18 @@ def test_parse_metodologia_na():
     assert result["metodologia"] == []
 
 
+def test_parse_metodologia_na_as_bullet():
+    """Model may output '- N/A' instead of bare 'N/A'; must still yield empty list."""
+    analysis = (
+        "**Punti chiave:**\n- punto 1\n"
+        "**Metodologia:**\n"
+        "- N/A\n"
+        "**Builder ROI:** 3/5 — ok\n"
+    )
+    result = _parse_yt_analysis(analysis)
+    assert result["metodologia"] == []
+
+
 def test_parse_strumenti_nessuno():
     analysis = (
         "**Punti chiave:**\n- punto 1\n"
