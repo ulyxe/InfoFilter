@@ -1,24 +1,42 @@
 import os
 import smtplib
+from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from string import Template
 from pathlib import Path
 
 
-def send_digest(subject: str, html_body: str, plain_body: str) -> None:
+def send_digest(
+    subject: str,
+    html_body: str,
+    plain_body: str,
+    pdf_attachment: bytes | None = None,
+    pdf_filename: str = "youtube_digest.pdf",
+) -> None:
     host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
     port = int(os.environ.get("SMTP_PORT", "587"))
     sender = os.environ["SMTP_USER"]
     password = os.environ["SMTP_PASSWORD"]
     recipient = os.environ["DIGEST_RECIPIENT_EMAIL"]
 
-    msg = MIMEMultipart("alternative")
+    if pdf_attachment:
+        msg = MIMEMultipart("mixed")
+        alt = MIMEMultipart("alternative")
+        alt.attach(MIMEText(plain_body, "plain", "utf-8"))
+        alt.attach(MIMEText(html_body, "html", "utf-8"))
+        msg.attach(alt)
+        part = MIMEApplication(pdf_attachment, Name=pdf_filename)
+        part["Content-Disposition"] = f'attachment; filename="{pdf_filename}"'
+        msg.attach(part)
+    else:
+        msg = MIMEMultipart("alternative")
+        msg.attach(MIMEText(plain_body, "plain", "utf-8"))
+        msg.attach(MIMEText(html_body, "html", "utf-8"))
+
     msg["Subject"] = subject
     msg["From"] = sender
     msg["To"] = recipient
-    msg.attach(MIMEText(plain_body, "plain", "utf-8"))
-    msg.attach(MIMEText(html_body, "html", "utf-8"))
 
     with smtplib.SMTP(host, port) as server:
         server.ehlo()
