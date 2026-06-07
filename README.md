@@ -63,6 +63,12 @@ Optional — only needed if you switch away from Gmail:
 |---|---|
 | `YOUTUBE_API_KEY` | YouTube Data API v3 key from [Google Cloud Console](https://console.cloud.google.com) |
 | `GEMINI_API_KEY` | Gemini API key from [Google AI Studio](https://aistudio.google.com) |
+| `YOUTUBE_CLIENT_ID` | OAuth2 client ID — needed to move digested videos to the "Digested" playlist |
+| `YOUTUBE_CLIENT_SECRET` | OAuth2 client secret |
+| `YOUTUBE_REFRESH_TOKEN` | OAuth2 refresh token — generated once with `scripts/youtube_oauth_setup.py` |
+
+The three `YOUTUBE_*` OAuth secrets are optional: if absent the weekly report is still
+sent but videos are not moved to the "Digested" playlist.
 
 ### 4. Create a Gmail App Password
 
@@ -75,7 +81,26 @@ Gmail rejects your normal password over SMTP. You need an App Password:
 > Outlook / Office 365 basic SMTP auth is disabled by Microsoft (`535 5.7.139`), so
 > Gmail is the only supported provider out of the box.
 
-### 5. Configure the YT Digest playlist
+### 5. Set up YouTube OAuth2 for the "Digested" playlist (optional)
+
+After each weekly report, videos are automatically moved to a YouTube playlist named
+"Digested" (created automatically if it doesn't exist). This requires a one-time OAuth2
+setup:
+
+1. In [Google Cloud Console](https://console.cloud.google.com), create an OAuth2
+   credential of type **Desktop app**.
+2. Add your Google account as a **test user** under the OAuth consent screen.
+3. Run the setup script (requires `pip install google-auth-oauthlib`):
+   ```bash
+   python scripts/youtube_oauth_setup.py --client-id YOUR_CLIENT_ID --client-secret YOUR_CLIENT_SECRET
+   ```
+4. Authorize in the browser that opens. The script prints a refresh token.
+5. Add `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`, and `YOUTUBE_REFRESH_TOKEN` as
+   GitHub Secrets.
+
+Skip this step if you don't need the "Digested" playlist feature.
+
+### 7. Configure the YT Digest playlist
 
 Edit `config/yt_config.yaml` and set your YouTube playlist ID:
 
@@ -87,14 +112,14 @@ model: "gemini-3.5-flash"
 
 The playlist ID is the part after `list=` in a YouTube playlist URL.
 
-### 6. Add or change RSS feeds
+### 8. Add or change RSS feeds
 
 Append a `{name, url, tags}` entry to the relevant config file — no code change needed:
 
 - Engineer feeds: `config/feeds.yaml`
 - Builder feeds: `config/feeds_builder.yaml`
 
-### 7. Enable GitHub Actions workflows
+### 9. Enable GitHub Actions workflows
 
 The workflow files live in `.github/workflows/`. If the Actions tab shows them as
 disabled, enable each one manually from the UI.
@@ -164,8 +189,12 @@ src/
   email_sender.py         # Shared SMTP sender + template renderers
   summarizer.py           # Groq summarizer (Engineer)
   summarizer_builder.py   # Groq summarizer (Builder)
-  yt_fetcher.py           # YouTube Data API client
+  yt_fetcher.py           # YouTube Data API client (read-only, API key auth)
   yt_processor.py         # Gemini video analyser
+  yt_playlist_manager.py  # YouTube playlist write operations (OAuth2)
+  yt_pdf.py               # PDF attachment generator
+scripts/
+  youtube_oauth_setup.py  # One-time OAuth2 token generator for playlist write access
 templates/
   email.html              # Engineer email template
   email_builder.html      # Builder email template
@@ -176,7 +205,7 @@ cache/
   digest.yml              # Engineer cron (Mon 06:00 UTC)
   builder-digest.yml      # Builder cron (Wed 06:00 UTC)
   yt-daily.yml            # YT fetch cron (daily 07:00 UTC)
-  yt-weekly.yml           # YT email cron (Sun 08:00 UTC)
+  yt-weekly.yml           # YT email cron (Sun 08:00 UTC) + cache commit
 ```
 
 ---
