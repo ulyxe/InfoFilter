@@ -25,6 +25,7 @@ import yaml
 from email_sender import send_digest
 from yt_pdf import generate_digest_pdf
 from yt_fetcher import fetch_playlist_ids
+from yt_playlist_manager import move_videos_after_report
 from yt_processor import (
     REQUEST_TIMEOUT_MS,
     load_cache,
@@ -206,6 +207,8 @@ def run_report() -> None:
         processed_at_str = entry.get("processed_at", "")
         if not processed_at_str:
             continue
+        if entry.get("digested_at"):
+            continue
         try:
             dt = datetime.fromisoformat(processed_at_str)
             if dt.tzinfo is None:
@@ -300,6 +303,17 @@ def run_report() -> None:
     send_digest(subject, html, plain, pdf_attachment=pdf_bytes)
     print(
         f"[INFO] YouTube Digest sent. Videos: {len(sorted_entries)}", flush=True)
+
+    config = yaml.safe_load(_CONFIG_PATH.read_text(encoding="utf-8"))
+    move_videos_after_report(
+        video_ids=[e["video_id"] for e in sorted_entries],
+        cache=cache,
+        source_playlist_id=config["playlist_id"],
+        client_id=os.environ.get("YOUTUBE_CLIENT_ID", ""),
+        client_secret=os.environ.get("YOUTUBE_CLIENT_SECRET", ""),
+        refresh_token=os.environ.get("YOUTUBE_REFRESH_TOKEN", ""),
+    )
+    save_cache(cache, _CACHE_PATH)
 
 
 # ---------------------------------------------------------------------------

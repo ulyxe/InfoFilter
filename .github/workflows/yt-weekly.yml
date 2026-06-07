@@ -20,6 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10    # Sending an email is fast; 10 min is a generous safety net.
 
+    permissions:
+      contents: write      # Required to push the updated cache (digested_at timestamps) back to repo.
+
     steps:
       # 1. Check out the repo — this brings in the latest cache/yt_cache.json
       #    that was committed by the daily fetch job throughout the week.
@@ -40,4 +43,18 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}                           # Gmail address used to send the email
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}                   # Gmail App Password (not your login password)
           DIGEST_RECIPIENT_EMAIL: ${{ secrets.DIGEST_RECIPIENT_EMAIL }} # Who receives the digest
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}           # OAuth2 client ID (for playlist write)
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}   # OAuth2 client secret
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}   # OAuth2 refresh token (from setup script)
         run: python src/main_yt.py --mode=report
+
+      # Persist digested_at timestamps written by the playlist manager.
+      # If the three YouTube OAuth secrets are not configured, this step still
+      # runs but git diff will be empty and the commit is skipped silently.
+      - name: Commit updated cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add cache/yt_cache.json
+          git diff --cached --quiet || git commit -m "chore: update yt cache after weekly report [skip ci]"
+          git push
