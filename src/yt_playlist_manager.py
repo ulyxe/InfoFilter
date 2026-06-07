@@ -23,7 +23,7 @@ def build_oauth_youtube(client_id: str, client_secret: str, refresh_token: str):
         token_uri="https://oauth2.googleapis.com/token",
         scopes=["https://www.googleapis.com/auth/youtube"],
     )
-    Request().refresh(creds)
+    creds.refresh(Request())
     return build("youtube", "v3", credentials=creds)
 
 
