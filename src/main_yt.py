@@ -23,8 +23,8 @@ from string import Template
 import yaml
 
 from email_sender import send_digest
-from yt_pdf import generate_digest_pdf
 from yt_fetcher import fetch_playlist_ids
+from yt_pdf import generate_digest_pdf
 from yt_playlist_manager import move_videos_after_report
 from yt_processor import (
     REQUEST_TIMEOUT_MS,
@@ -64,7 +64,8 @@ def _md_to_html(text: str) -> str:
     text = re.sub(r'__(.+?)__', r'<strong>\1</strong>', text)
     text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
     text = re.sub(r'_(.+?)_', r'<em>\1</em>', text)
-    text = re.sub(r'`(.+?)`', r'<code style="background:#0f172a;padding:1px 4px;border-radius:3px;">\1</code>', text)
+    text = re.sub(
+        r'`(.+?)`', r'<code style="background:#0f172a;padding:1px 4px;border-radius:3px;">\1</code>', text)
     return text
 
 
@@ -93,17 +94,25 @@ def _parse_yt_analysis(analysis: str) -> dict:
             continue
 
         if (v := _extract(s, "**Canale:**")) is not None:
-            fields["canale"] = v; in_punti = False; in_metodologia = False
+            fields["canale"] = v
+            in_punti = False
+            in_metodologia = False
         elif (v := _extract(s, "**Durata stimata:**")) is not None:
-            fields["durata"] = v; in_punti = False; in_metodologia = False
+            fields["durata"] = v
+            in_punti = False
+            in_metodologia = False
         elif (v := _extract(s, "**Argomento principale:**")) is not None:
-            fields["argomento"] = v; in_punti = False; in_metodologia = False
+            fields["argomento"] = v
+            in_punti = False
+            in_metodologia = False
         elif s.startswith("**Punti chiave:**"):
-            in_punti = True; in_metodologia = False
+            in_punti = True
+            in_metodologia = False
         elif in_punti and s.startswith("- "):
             fields["punti"].append(s[2:].strip())
         elif s.startswith("**Metodologia:**"):
-            in_punti = False; in_metodologia = True
+            in_punti = False
+            in_metodologia = True
         elif in_punti and s.startswith("**"):
             in_punti = False
         elif in_metodologia and (s.upper() == "N/A" or s.startswith("**")):
@@ -119,11 +128,13 @@ def _parse_yt_analysis(analysis: str) -> dict:
             if (v := _extract(s, "**Strumenti e tecnologie:**")) is not None:
                 raw = v.strip()
                 if raw.lower() not in ("nessuno", "nessuna", "n/a", ""):
-                    fields["strumenti"] = [t.strip() for t in raw.split(",") if t.strip()]
+                    fields["strumenti"] = [t.strip()
+                                           for t in raw.split(",") if t.strip()]
             elif (v := _extract(s, "**Risorse consigliate:**")) is not None:
                 raw = v.strip()
                 if raw.lower() not in ("nessuno", "nessuna", "n/a", ""):
-                    fields["risorse"] = [r.strip() for r in raw.split(",") if r.strip()]
+                    fields["risorse"] = [r.strip()
+                                         for r in raw.split(",") if r.strip()]
             elif (v := _extract(s, "**Builder ROI:**")) is not None:
                 fields["builder_roi"] = v
             elif (v := _extract(s, "**Engineer ROI:**")) is not None:
@@ -226,7 +237,8 @@ def run_report() -> None:
         recent_entries, key=lambda e: e.get("rating", 0), reverse=True)
 
     # Pre-parse all analyses once
-    parsed = [_parse_yt_analysis(e.get("analysis", "")) for e in sorted_entries]
+    parsed = [_parse_yt_analysis(e.get("analysis", ""))
+              for e in sorted_entries]
 
     # --- Compact HTML body (ranking list) ---
     if _TEMPLATE_PATH.exists():
@@ -300,7 +312,12 @@ def run_report() -> None:
     ]
     pdf_bytes = generate_digest_pdf(pdf_entries, date_str)
 
-    send_digest(subject, html, plain, pdf_attachment=pdf_bytes)
+    # Create PDF filename with generation date
+    date_slug = datetime.now().strftime("%Y-%m-%d")
+    pdf_filename = f"youtube_digest_{date_slug}.pdf"
+
+    send_digest(subject, html, plain, pdf_attachment=pdf_bytes,
+                pdf_filename=pdf_filename)
     print(
         f"[INFO] YouTube Digest sent. Videos: {len(sorted_entries)}", flush=True)
 
