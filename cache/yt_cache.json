@@ -1313,5 +1313,15 @@
     "topic": "Builder",
     "title": "The NEW Claude Agent OS is a Game Changer",
     "processed_at": "2026-07-22T09:33:16"
+  },
+  "Joqh7Tui9B8": {
+    "video_id": "Joqh7Tui9B8",
+    "url": "https://www.youtube.com/watch?v=Joqh7Tui9B8",
+    "status": "ok",
+    "analysis": "**Titolo:** Graph Engineering: Il futuro degli Agenti AI?\n**Canale:** McKay Wrigley\n**Durata stimata:** 10 minuti\n**Argomento principale:** Introduzione al concetto di \"Graph Engineering\" come evoluzione del \"Loop Engineering\" nei flussi di lavoro degli agenti AI, analizzando vantaggi, svantaggi e casi d'uso ottimali.\n**Punti chiave:**\n- Il Loop Engineering si basa su tre elementi fondamentali: trigger (avvio), task (compito) e success criteria (criteri di successo per l'autocorrezione).\n- Il Graph Engineering scompone un singolo task complesso in una rete di agenti specializzati e interconnessi (un grafo).\n- L'approccio a grafo migliora la qualità dell'output mantenendo la finestra di contesto di ciascun agente pulita ed evitando il \"context rot\" (decadimento del contesto).\n- Aumenta la velocità di esecuzione consentendo l'elaborazione parallela di più attività (es. scraping di diverse fonti contemporaneamente).\n- Semplifica il debugging, rendendo immediato individuare quale nodo specifico del grafo ha fallito.\n- Il Graph Engineering è consigliato in tre scenari: limiti di contesto, necessità di una revisione indipendente dei risultati (agente di controllo esterno) e requisiti di esecuzione parallela.\n- Non tutti i progetti richiedono questa complessità; per compiti lineari e semplici, un singolo loop è spesso più efficiente e meno costoso da mantenere.\n**Strumenti e tecnologie:** Claude Code, GPT-5.6 (menzionato ipoteticamente), Excalidraw, Chase AI Plus\n**Risorse consigliate:** Claude Code Masterclass (su Chase AI Plus)\n**Metodologia:**\nN/A\n**Builder ROI:** 4 — Estremamente utile per solopreneur e creatori di prodotti AI che vogliono scalare la complessità delle proprie feature mantenendo alta l'affidabilità dell'output.\n**Engineer ROI:** 4 — Concetto architetturale cruciale per chi sviluppa con framework agentici o progetta pipeline di automazione avanzate con LLM.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** Fornisce una spiegazione visiva e concettuale chiarissima su come passare da semplici script AI a veri e propri sistemi multi-agente strutturati, offrendo regole decisionali pratiche per evitare l'over-engineering.\n**Tag:** #AI #AgentiAI #GraphEngineering #MultiAgent #ArchitetturaSoftware",
+    "rating": 4,
+    "topic": "Entrambi",
+    "title": "Graph Engineering: Il futuro degli Agenti AI?",
+    "processed_at": "2026-07-24T09:25:53"
   }
 }
