@@ -1603,5 +1603,15 @@
     "topic": "Entrambi",
     "title": "Ho Automatizzato la mia Produttività con Claude AI",
     "processed_at": "2026-08-15T07:39:46"
+  },
+  "kwSVtQ7dziU": {
+    "video_id": "kwSVtQ7dziU",
+    "url": "https://www.youtube.com/watch?v=kwSVtQ7dziU",
+    "status": "ok",
+    "analysis": "**Titolo:** Andrej Karpathy on No Priors\n**Canale:** No Priors\n**Durata stimata:** 1 ora\n**Argomento principale:** Il futuro della programmazione tramite agenti IA, l'automazione domestica e la ricerca IA autonoma.\n**Punti chiave:**\n- Transizione dal coding tradizionale alla delega quasi totale ad agenti IA.\n- Concetto di \"claw\" (agenti persistenti) che operano in background in ambiente protetto.\n- Progetto domotico \"Dobby\" basato su scansione di rete, API locali e modelli di visione.\n- Importanza dell'auto-ricerca e del miglioramento ricorsivo dei modelli di linguaggio.\n- Disomogeneità (\"jaggedness\") delle attuali capacità dei modelli (es. programmazione avanzata vs umorismo).\n- Ruolo dell'open source come alternativa necessaria alla centralizzazione delle grandi aziende.\n- Futuro dell'istruzione incentrato sull'insegnare agli agenti come fare da tutor agli umani.\n**Strumenti e tecnologie:** Claude Code, Codex, Qwen, Sonos, microGPT, ChatGPT\n**Risorse consigliate:** Libro \"Daemon\" di Daniel Suarez, nanoGPT, micrograd\n**Metodologia:**\nN/A\n**Builder ROI:** 4 - Visione strategica eccellente per ideare e monetizzare servizi agentici e automazioni reali.\n**Engineer ROI:** 5 - Fondamentale per comprendere il cambio di paradigma nella produttività dello sviluppo software.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐⭐⭐\n**Perché:** Fornisce indicazioni d'avanguardia sul futuro dell'ingegneria del software e dello sviluppo agentico da parte di una delle figure più autorevoli del settore.\n**Tag:** #AI #CodeAgents #SoftwareEngineering #Automation #FutureOfWork",
+    "rating": 5,
+    "topic": "Entrambi",
+    "title": "Andrej Karpathy on No Priors",
+    "processed_at": "2026-08-16T07:35:00"
   }
 }
