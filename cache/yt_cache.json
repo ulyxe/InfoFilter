@@ -1683,5 +1683,15 @@
     "topic": "Engineer",
     "title": "Wayfinder: Come pianificare grandi progetti con Claude Code (Clone di Loom)",
     "processed_at": "2026-08-19T07:53:42"
+  },
+  "_QbwGYLIRaM": {
+    "video_id": "_QbwGYLIRaM",
+    "url": "https://www.youtube.com/watch?v=_QbwGYLIRaM",
+    "status": "ok",
+    "analysis": "**Titolo:** Conviene Estinguere un Debito o Investire?\n**Canale:** Omney\n**Durata stimata:** 10 minuti\n**Argomento principale:** Strategia finanziaria per valutare se conviene estinguere anticipatamente un debito o investire la liquidità disponibile.\n**Punti chiave:**\n- Classificazione dei debiti in \"cattivi\" (revolving, credito al consumo ad alto tasso) e \"accettabili\" (es. mutuo prima casa).\n- Calcolo della soglia di convenienza basata sul tasso depositi BCE + 3,5% (pari al 5,75% nel momento del video).\n- Priorità assoluta all'estinzione dei debiti con tasso superiore alla soglia calcolata per ottenere un risparmio garantito e privo di rischi.\n- Gli investimenti (es. ETF azionari) offrono rendimenti storicamente superiori alla soglia ma non garantiti e soggetti a volatilità nel breve termine.\n- Valutazione dell'ammortamento alla francese del mutuo: estinguere anticipatamente conviene soprattutto nella prima metà del piano.\n- Rilevanza della componente psicologica (impatto dello stress da debito) e della tassazione sulle plusvalenze (26%) in caso di liquidazione di investimenti.\n- Utilizzo della surroga per trasferire gratuitamente mutui costosi verso banche con condizioni migliori.\n\n**Strumenti e tecnologie:** nessuno\n**Risorse consigliate:** Il Bignami della Finanza (guida gratuita Omney), La Guida Definitiva sugli Investimenti (guida gratuita Omney)\n\n**Metodologia:**\n- 1. Elenca tutti i debiti attivi (mutuo, prestiti, rate, carte di credito).\n- 2. Individua il TAEG per ciascun debito.\n- 3. Calcola la soglia attuale sommando 3.5 punti percentuali al tasso sui depositi BCE.\n- 4. Estingui il prima possibile i debiti con tasso sopra la soglia, partendo da quello più alto.\n- 5. Valuta di mantenere i debiti con tasso sotto la soglia e di investire parallelamente la liquidità.\n\n**Builder ROI:** 1, Offre esclusivamente nozioni di finanza personale di base, senza alcun legame con la creazione o monetizzazione di prodotti AI e solopreneurship.\n**Engineer ROI:** 1, Nessuna attinenza con la produttività di sviluppo, codice o strumenti di programmazione.\n**Topic dominante:** Builder\n**Vale il tempo?** ⭐\n**Perché:** Il video è completamente off-topic per chi cerca competenze relative allo sviluppo software, ingegneria o business legati all'intelligenza artificiale.\n**Tag:** #FinanzaPersonale #Investimenti #GestioneDebito #Risparmio",
+    "rating": 1,
+    "topic": "Builder",
+    "title": "Conviene Estinguere un Debito o Investire?",
+    "processed_at": "2026-08-20T07:44:38"
   }
 }
