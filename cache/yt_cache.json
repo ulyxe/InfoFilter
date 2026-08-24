@@ -1733,5 +1733,15 @@
     "topic": "Builder",
     "title": "Come creare un'app AI profittevole da soli (Guida Vibe Coding)",
     "processed_at": "2026-08-22T07:40:05"
+  },
+  "yv8VZpov8bk": {
+    "video_id": "yv8VZpov8bk",
+    "url": "https://www.youtube.com/watch?v=yv8VZpov8bk",
+    "status": "ok",
+    "analysis": "**Titolo:** Claude Code + Git Worktrees: Parallel Agent Workflows\n**Canale:** Matt Pocock\n**Durata stimata:** 8 minuti\n**Argomento principale:** Guida all'uso dei Git Worktree integrati in Claude Code per eseguire agenti di sviluppo AI in parallelo senza conflitti nel workspace.\n\n**Punti chiave:**\n- I Git Worktree permettono di avere più branch attivi contemporaneamente in directory separate.\n- Il comando `claude --worktree` automatizza la creazione di un ambiente isolato per l'agente.\n- Previene conflitti di file quando si eseguono più task o agenti in parallelo sullo stesso repository.\n- VS Code e Cursor integrano visivamente i worktree nel pannello Source Control, facilitando la gestione dei commit.\n- Al termine del task, l'utente può scegliere se mantenere o eliminare definitivamente il worktree.\n- Attenzione ai push automatici dell'agente: se il branch principale non è protetto, potrebbe inviare modifiche direttamente su `main`.\n\n**Strumenti e tecnologie:** Git, Claude Code, VS Code, Cursor\n\n**Risorse consigliate:** Corso e newsletter AIHero\n\n**Metodologia:**\n- Creazione manuale di un worktree Git di test per illustrare il concetto di isolamento dei branch.\n- Avvio di Claude Code in modalità worktree con il flag `--worktree`.\n- Assegnazione di un task di editing di codice all'agente all'interno della cartella isolata `.claude/worktrees/`.\n- Monitoraggio delle modifiche, commit e push del codice tramite VS Code.\n- Chiusura della sessione con pulizia automatica dell'ambiente di lavoro.\n\n**Builder ROI:** 2, Bassa rilevanza per chi non scrive codice direttamente, utile solo se si gestiscono build tecniche complesse in solitaria.\n**Engineer ROI:** 5, Fondamentale per sviluppatori che usano agenti AI: sblocca il multi-tasking locale sicuro senza corrompere il workspace principale.\n**Topic dominante:** Engineer\n**Vale il tempo?** ⭐⭐⭐⭐⭐\n**Perché:** Gli sviluppatori otterranno un immediato boost di produttività capendo come parallelizzare il lavoro degli agenti AI sul proprio codice locale.\n\n**Tag:** #ClaudeCode #GitWorktree #AIProductivity #AgenticCoding",
+    "rating": 5,
+    "topic": "Engineer",
+    "title": "Claude Code + Git Worktrees: Parallel Agent Workflows",
+    "processed_at": "2026-08-24T08:00:49"
   }
 }
