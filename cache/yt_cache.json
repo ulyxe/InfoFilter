@@ -1743,5 +1743,15 @@
     "topic": "Engineer",
     "title": "Claude Code + Git Worktrees: Parallel Agent Workflows",
     "processed_at": "2026-08-24T08:00:49"
+  },
+  "xXS83RALMtc": {
+    "video_id": "xXS83RALMtc",
+    "url": "https://www.youtube.com/watch?v=xXS83RALMtc",
+    "status": "ok",
+    "analysis": "**Titolo:** How I Tripled My Claude Usage (Never Hit Limits Again)\n**Canale:** Jack Roberts\n**Durata stimata:** 17 minuti\n**Argomento principale:** Strategie pratiche e modifiche comportamentali per ottimizzare l'uso dei token in Claude e azzerare i limiti di utilizzo.\n**Punti chiave:**\n- Audit del consumo dei token tramite un \"Master Prompt\" per identificare gli sprechi.\n- Uso del comando `/clear` tra i task per non rileggere continuamente la cronologia.\n- Mantenimento dello stesso modello e livello di \"effort\" nella medesima sessione.\n- Raggruppamento delle domande in un unico messaggio (batching).\n- Modifica del prompt originale anziché invio di messaggi di correzione.\n- Utilizzo di testo semplice anziché caricamento di PDF o screenshot pesanti.\n- Riduzione della verbosità di Claude impostando lo standard di comunicazione STE-100.\n- Routing intelligente dei task sui modelli corretti (Haiku, Sonnet, Opus, Fable).\n**Strumenti e tecnologie:** Claude, Claude Code, Glaido, Genspark, Graphify\n**Risorse consigliate:** Claude Code Course (link in descrizione del video)\n**Metodologia:**\n- Eseguire il Master Prompt per analizzare lo stato iniziale dei token.\n- Disattivare i connettori e i plugin non necessari per alleggerire il contesto.\n- Applicare i 5 habit di ottimizzazione (clear, mono-modello, batching, editing, text-only).\n- Integrare Graphify per mappare i codebase complessi anziché caricarli interamente.\n**Builder ROI:** 4 — Ottimo per solopreneur che vogliono minimizzare i costi di prototipazione con LLM.\n**Engineer ROI:** 5 — Indispensabile per sviluppatori che usano Claude quotidianamente e vogliono evitare frequenti blocchi da rate limit.\n**Topic dominante:** Engineer\n**Vale il tempo?** ⭐⭐⭐⭐⭐\n**Perché:** Offre soluzioni tecniche e workflow immediatamente applicabili che risolvono uno dei problemi più frustranti per chi programma con Claude.\n**Tag:** #AI #Claude #Produttività #Coding #LLM",
+    "rating": 5,
+    "topic": "Engineer",
+    "title": "How I Tripled My Claude Usage (Never Hit Limits Again)",
+    "processed_at": "2026-08-30T12:43:21"
   }
 }
