@@ -1753,5 +1753,15 @@
     "topic": "Engineer",
     "title": "How I Tripled My Claude Usage (Never Hit Limits Again)",
     "processed_at": "2026-08-30T12:43:21"
+  },
+  "XBDHASPsQgo": {
+    "video_id": "XBDHASPsQgo",
+    "url": "https://www.youtube.com/watch?v=XBDHASPsQgo",
+    "status": "ok",
+    "analysis": "**Titolo:** Come Gestire i tuoi Soldi: Il Sistema 15 65 20\n**Canale:** Giuseppe Castagna\n**Durata stimata:** 12 minuti\n**Argomento principale:** Un metodo pratico di budgeting per ripartire le entrate mensili tra risparmio, spese essenziali e svago.\n**Punti chiave:**\n- L'efficacia della gestione finanziaria supera l'importanza della quantità di denaro guadagnata.\n- Il 15% delle entrate va accantonato subito per sicurezza a lungo termine e investimenti passivi (ETF).\n- Creazione di un fondo di emergenza equivalente a 3-6 mesi di spese fondamentali.\n- Importanza del fattore tempo e dell'interesse composto per la crescita del capitale.\n- Tetto massimo del 65% per le spese fisse ed essenziali (casa, bollette, cibo, trasporti) per evitare il \"lifestyle creep\".\n- Riserva del 20% dedicata al \"fondo per la felicità\" per spese personali libere e senza sensi di colpa.\n- Il denaro va considerato come mezzo per acquistare tempo e libertà, non come fine assoluto.\n**Strumenti e tecnologie:** Mintos\n**Risorse consigliate:** \"Padre Ricco Padre Povero\" (Robert T. Kiyosaki), \"Die with Zero\" (Bill Perkins)\n**Metodologia:**\n- Calcolare l'entrata mensile netta complessiva.\n- Automatizzare il prelievo del 15% per risparmio ed investimento appena arriva l'entrata.\n- Monitorare e ottimizzare le spese fisse per mantenerle sotto la soglia del 65%.\n- Allocare il restante 20% a un conto separato destinato unicamente allo svago.\n**Builder ROI:** 1, Utile solo a livello personale per la gestione finanziaria del solopreneur, ma privo di spunti su prodotti o mercati AI.\n**Engineer ROI:** 1, Totalmente irrilevante per la produttività di sviluppo, codice o strumenti agentici.\n**Topic dominante:** Builder\n**Vale il tempo?** ⭐\n**Perché:** Off-topic. Tratta esclusivamente di finanza personale e ottimizzazione del budget, senza alcuna attinenza con lo sviluppo software o la monetizzazione di tecnologie AI.\n**Tag:** #finanzapersonale #investimenti #risparmio #budgeting",
+    "rating": 1,
+    "topic": "Builder",
+    "title": "Come Gestire i tuoi Soldi: Il Sistema 15 65 20",
+    "processed_at": "2026-09-06T11:44:24"
   }
 }
