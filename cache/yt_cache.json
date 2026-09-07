@@ -1763,5 +1763,15 @@
     "topic": "Builder",
     "title": "Come Gestire i tuoi Soldi: Il Sistema 15 65 20",
     "processed_at": "2026-09-06T11:44:24"
+  },
+  "atbUx3Bf4uA": {
+    "video_id": "atbUx3Bf4uA",
+    "url": "https://www.youtube.com/watch?v=atbUx3Bf4uA",
+    "status": "ok",
+    "analysis": "**Titolo:** Come creare un team di agenti AI con Grok Bot\n**Canale:** Jack Roberts\n**Durata stimata:** 17 minuti\n**Argomento principale:** Configurazione di un team multi-agente AI per automatizzare lavoro, salute e finanze personali.\n**Punti chiave:**\n- Grok Bot consente di creare agenti AI che collaborano in background 24/7.\n- \"Grok Master\" analizza le tue esigenze e definisce gli agenti necessari.\n- \"Digital Arnie\" monitora salute, allenamenti e dati di benessere.\n- Lo \"Chief of Staff\" coordina il team e delega i compiti.\n- Integrazione con Apify e Topview per recupero dati e creazione video.\n- Lo \"Strategist\" analizza competitor, revenue e metriche di business.\n- \"Head of Fun\" organizza il tempo libero in base al calendario.\n- Il \"Finance Bot\" si collega alla banca per tracciare profitti e perdite.\n**Strumenti e tecnologie:** Grok Bot, Claude, ChatGPT, Apify, Topview, Mercury, Google Calendar, Notion, Canva, GitHub\n**Risorse consigliate:** Claude Code Full Course, Hermes Agent Masterclass\n**Metodologia:**\n- Configura l'agente principale \"Grok Master\" inserendo un emoji e un nome.\n- Fornisci un \"brain dump\" dettagliato delle tue attività (puoi aiutarti con Claude/ChatGPT).\n- Consenti a Grok Master di generare gli agenti specializzati (salute, finanze, marketing).\n- Autorizza i plugin e le connessioni esterne necessarie per ciascun agente.\n- Utilizza l'agente coordinatore per delegare compiti complessi all'intero team.\n**Builder ROI:** 4, Altamente strategico per solopreneur che vogliono scalare l'operatività aziendale senza assumere personale.\n**Engineer ROI:** 3, Utile per comprendere i flussi multi-agente e le integrazioni MCP, anche se l'approccio è prevalentemente low-code.\n**Topic dominante:** Builder\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** I builder e i solopreneur otterranno un framework chiaro per mappare e delegare i propri processi quotidiani a un team di agenti AI pronti all'uso.\n**Tag:** #AI #AgentiAI #Automazione #Produttività",
+    "rating": 4,
+    "topic": "Builder",
+    "title": "Come creare un team di agenti AI con Grok Bot",
+    "processed_at": "2026-09-07T13:27:49"
   }
 }
