@@ -1793,5 +1793,15 @@
     "topic": "Builder",
     "title": "Come far crescere uno studio professionale (oltre l'acquisizione clienti)",
     "processed_at": "2026-09-09T12:15:09"
+  },
+  "ns7Z8rd7-xY": {
+    "video_id": "ns7Z8rd7-xY",
+    "url": "https://www.youtube.com/watch?v=ns7Z8rd7-xY",
+    "status": "ok",
+    "analysis": "**Titolo:** Come fare Lead Generation con l'AI (ScrapeGraphAI)\n**Canale:** Nicola Lisi\n**Durata stimata:** 10 minuti\n**Argomento principale:** Come arricchire liste di lead freddi in database dettagliati e pronti all'uso commerciale tramite ScrapeGraphAI e prompt AI.\n**Punti chiave:**\n- Le liste di lead tradizionali (es. da Google Maps) mancano di dati cruciali per una conversione efficace.\n- ScrapeGraphAI (libreria open-source) permette lo scraping intelligente basato su AI di siti web.\n- L'utilizzo di Claude consente di mappare i lead di partenza con le capacità estrattive dello scraper.\n- Il database arricchito può includere Partita IVA, membri del team, software utilizzati e decision maker.\n- Non conviene usare tool costosi come Clay nelle fasi iniziali di validazione dell'offerta.\n- Approccio \"scrappy\" con AI consigliato per testare rapidamente nuove nicchie o servizi.\n**Strumenti e tecnologie:** ScrapeGraphAI, Claude (Anthropic), Google Sheets, Clay.com\n**Risorse consigliate:** Repository GitHub di ScrapeGraphAI\n**Metodologia:**\n- 1. Estrazione di una lista di lead base (es. nomi e siti web di dentisti).\n- 2. Utilizzo della repository di ScrapeGraphAI per comprendere le capacità di estrazione dati.\n- 3. Invio a Claude dei link della lista iniziale e della repo per progettare la struttura di arricchimento.\n- 4. Generazione del foglio Google finale con i dati aziendali, tecnologici e di contatto arricchiti.\n**Builder ROI:** 4 - Estremamente utile per solopreneur e agenzie che vogliono validare offerte sul mercato italiano riducendo i costi di lead generation.\n**Engineer ROI:** 3 - Interessante introduzione a ScrapeGraphAI, ma incentrata più sul workflow logico che sulla scrittura di codice puro.\n**Topic dominante:** Builder\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** Offre una strategia concreta e a basso costo per automatizzare l'arricchimento dei lead aziendali, ottimale per chi lancia nuovi prodotti o servizi.\n**Tag:** #LeadGeneration #ScrapeGraphAI #AI #Produttività #GrowthHacking",
+    "rating": 4,
+    "topic": "Builder",
+    "title": "Come fare Lead Generation con l'AI (ScrapeGraphAI)",
+    "processed_at": "2026-09-10T12:08:42"
   }
 }
