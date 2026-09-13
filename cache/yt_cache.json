@@ -1813,5 +1813,25 @@
     "topic": "Builder",
     "title": "Vendere servizi AI - corso per consulenti",
     "processed_at": "2026-09-12T11:33:39"
+  },
+  "IJdICgRth2U": {
+    "video_id": "IJdICgRth2U",
+    "url": "https://www.youtube.com/watch?v=IJdICgRth2U",
+    "status": "ok",
+    "analysis": "**Titolo:** Agenzia AI first: il mio setup operativo con Claude Code\n**Canale:** Luca Di Domenico\n**Durata stimata:** 13 minuti\n**Argomento principale:** L'architettura operativa basata su Claude Code per automatizzare sviluppo, monitoraggio e gestione di un'agenzia \"AI-first\".\n\n**Punti chiave:**\n- Claude Code funge da layer operativo centrale collegato a tutti i flussi di lavoro.\n- Utilizzo di una VPS 24/7 per consentire l'esecuzione autonoma dei task di Claude Code.\n- Monitoraggio continuo dei log delle web app con capacità di auto-fixing ed email di alert.\n- Invio di promemoria e task di programmazione direttamente da smartphone a Claude Code su VPS.\n- Condivisione del contesto aziendale tramite GitHub e Google Drive (sfruttando il protocollo MCP).\n- Integrazione di Fonio.ai, agente vocale AI italiano per prenotare appuntamenti via telefono.\n- Analisi automatizzata dei feedback di Discord e Google Analytics per ottimizzare il sito e i contenuti.\n- Creazione di una web app interna di \"vibe-coding\" per velocizzare la scrittura di post e script video.\n\n**Strumenti e tecnologie:** Claude Code, GitHub, Google Drive (MCP), VPS, Fonio.ai, Discord, Google Analytics.\n**Risorse consigliate:** Fonio.ai, Video tutorial VPS di Luca Di Domenico.\n\n**Metodologia:**\nN/A\n\n**Builder ROI:** 4/5 — Molto utile per solopreneur e agenzie per capire come strutturare flussi di business e acquisizione clienti delegando all'AI.\n**Engineer ROI:** 5/5 — Dimostrazione pratica eccellente di programmazione agentica, utilizzo di MCP e deploy di agenti autonomi su server.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐⭐⭐\n**Perché:** Fornisce un blueprint concreto e funzionante su come superare i limiti delle classiche chat AI, integrando Claude direttamente nel terminale e sul server.\n**Tag:** #AI #ClaudeCode #Automazione #Produttività #MCP",
+    "rating": 5,
+    "topic": "Entrambi",
+    "title": "Agenzia AI first: il mio setup operativo con Claude Code",
+    "processed_at": "2026-09-13T12:38:04"
+  },
+  "JTX03Ba6gPU": {
+    "video_id": "JTX03Ba6gPU",
+    "url": "https://www.youtube.com/watch?v=JTX03Ba6gPU",
+    "status": "ok",
+    "analysis": "**Titolo:** Sintesi dei migliori consigli di Iman Gadzhi per dominare Claude AI\n**Canale:** Recensioni e Sintesi AI\n**Durata stimata:** 4 minuti\n**Argomento principale:** Cinque consigli strategici selezionati dal video di Iman Gadzhi per ottimizzare l'uso di Claude, dalla gestione dell'account allo sviluppo no-code.\n**Punti chiave:**\n- **Scelta dell'email:** Usa un indirizzo personale; Claude non permette di cambiarlo e rischi di perdere la cronologia se usi la mail aziendale.\n- **Uso delle \"Skill\":** Crea o scarica istruzioni fisse e ripetibili per compiti specifici, a differenza della \"Memoria\" che apprende nel tempo.\n- **Evitare i \"Progetti\":** I progetti isolano la memoria di Claude, azzerando il contesto accumulato nelle chat generali.\n- **Claude Code:** Consente di programmare e testare applicazioni complesse usando esclusivamente il linguaggio naturale.\n- **Claude Design:** Ottimo per generare rapidamente mockup, landing page e layout web di qualità professionale.\n\n**Strumenti e tecnologie:** Claude, Claude Desktop, Claude Code, Claude Design\n**Risorse consigliate:** Video originale di Iman Gadzhi su Claude\n**Metodologia:** \nN/A\n\n**Builder ROI:** 4/5 — Estremamente rilevante per solopreneur che vogliono creare landing page e prototipi di app senza competenze di programmazione.\n**Engineer ROI:** 4/5 — Ottimo per comprendere la gestione dei limiti di contesto e sfruttare Claude Code per accelerare lo sviluppo.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** Ottimizza i tempi riassumendo in pochi minuti i concetti operativi più importanti di un video più lungo, con focus su produttività e sviluppo rapido.\n**Tag:** #Claude #IntelligenzaArtificiale #Produttività #NoCode",
+    "rating": 4,
+    "topic": "Entrambi",
+    "title": "Sintesi dei migliori consigli di Iman Gadzhi per dominare Claude AI",
+    "processed_at": "2026-09-13T12:38:50"
   }
 }
