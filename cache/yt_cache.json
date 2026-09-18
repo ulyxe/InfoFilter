@@ -1853,5 +1853,15 @@
     "topic": "Entrambi",
     "title": "Turn Claude Code Into Your Own J.A.R.V.I.S.",
     "processed_at": "2026-09-17T12:31:25"
+  },
+  "DNt4KbHRfng": {
+    "video_id": "DNt4KbHRfng",
+    "url": "https://www.youtube.com/watch?v=DNt4KbHRfng",
+    "status": "ok",
+    "analysis": "**Titolo:** OpenCodeReview: Come Rivoluzionare la Code Review con l'AI\n**Canale:** AIA - AI Academy\n**Durata stimata:** 10 minuti\n**Argomento principale:** Guida all'installazione e all'uso di OpenCodeReview per automatizzare e ottimizzare la revisione del codice generato da AI.\n**Punti chiave:**\n- OpenCodeReview è un tool open source di Alibaba che unisce approccio deterministico e agentico.\n- Riduce fino a 1/9 il consumo di token rispetto ai metodi tradizionali di revisione con LLM.\n- Analizza il codice basandosi su metriche chiave come Precision, Recall e F1-score.\n- Supporta l'integrazione nativa con coding agent come Claude Code e IDE come Cursor.\n- Offre la \"Delegation Mode\" per riutilizzare abbonamenti esistenti senza chiavi API aggiuntive.\n- Include un'interfaccia web locale (`ocr viewer`) per analizzare i report di review.\n**Strumenti e tecnologie:** OpenCodeReview, Claude Code, Node.js, npm, Git, GitHub, OpenAI API, Anthropic Claude\n**Risorse consigliate:** Community AIA (link in descrizione)\n**Metodologia:**\n- Installare la CLI globale tramite npm.\n- Configurare il provider LLM o abilitare la Delegation Mode.\n- Integrare il plugin all'interno del proprio coding agent (es. Claude Code).\n- Lanciare la review sul workspace o su specifici commit.\n- Esplorare i dettagli dei bug rilevati tramite la dashboard locale.\n**Builder ROI:** 3/5 — Utile per garantire la qualità del codice di MVP senza spendere cifre elevate in token, ma richiede competenze tecniche di base.\n**Engineer ROI:** 4/5 — Estremamente rilevante per chi usa coding agent e vuole un guardrail strutturato per validare il codice minimizzando i costi.\n**Topic dominante:** Engineer\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** Il video offre una panoramica tecnica e pratica immediata su come integrare un sistema di review avanzato nel proprio workflow di sviluppo con AI.\n**Tag:** #AI #CodeReview #ClaudeCode #Programmazione",
+    "rating": 4,
+    "topic": "Engineer",
+    "title": "OpenCodeReview: Come Rivoluzionare la Code Review con l'AI",
+    "processed_at": "2026-09-18T12:09:21"
   }
 }
