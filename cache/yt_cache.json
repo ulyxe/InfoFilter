@@ -1933,5 +1933,15 @@
     "topic": "Entrambi",
     "title": "HERMÈS vs OPENCLAW: Struttura tecnica dei due agenti AI più famosi",
     "processed_at": "2026-09-21T13:58:01"
+  },
+  "iXSdX_MbZ2M": {
+    "video_id": "iXSdX_MbZ2M",
+    "url": "https://www.youtube.com/watch?v=iXSdX_MbZ2M",
+    "status": "ok",
+    "analysis": "**Titolo:** Come usare Jev (TypeSafe AI) con Claude Code per risparmiare tempo e soldi\n**Canale:** AI Academy\n**Durata stimata:** 11 minuti\n**Argomento principale:** Analisi e integrazione di Jev di TypeSafe AI con Claude Code per ottimizzare il routing dei modelli, compattare il contesto e automatizzare le code review.\n**Punti chiave:**\n- Jev è un modello \"System One\" ultra-veloce ed economico sviluppato da TypeSafe AI per prendere decisioni calibrate.\n- Utilizza la tecnologia RLCD (Reinforcement Learning for Calibrated Decisions) per generare risposte parallele anziché token auto-regressivi.\n- Dispone di tre primitive strutturate: Noul (booleano), Score (classificazione ordinata) e Choice (scelte multiple).\n- Essendo stateless, Jev elabora ogni richiesta in modo indipendente senza mantenere memoria di sessione.\n- Applicazione 1: Jev Router seleziona dinamicamente il modello Claude più adatto (Haiku, Sonnet, Opus) in base alla difficoltà della richiesta.\n- Applicazione 2: Jev compatto riduce la finestra di contesto eliminando i messaggi e le chiamate tool superflue prima di inoltrare la cronologia a Claude.\n- Applicazione 3: Jev Review analizza le differenze di Git alla ricerca di credenziali hardcoded, bug o modifiche alla sicurezza.\n**Strumenti e tecnologie:** Jev, TypeSafe AI, Claude Code, Git, Python, GitHub\n**Risorse consigliate:** Community AI Academy, Video di Alessio (approfondimento tecnico su Jev)\n**Metodologia:**\n- Registrarsi alla waiting list sul sito di TypeSafe AI per ottenere l'API key.\n- Abilitare i Function Hooks sperimentali di Claude Code.\n- Integrare gli script e i prompt di sistema forniti per il routing, la compattazione o la review del codice.\n- Eseguire i flussi su Claude Code per automatizzare le valutazioni in tempo reale.\n**Builder ROI:** 3 — Offre spunti utili per implementare architetture di orchestrazione multi-modello a basso costo per prodotti commerciali.\n**Engineer ROI:** 4 — Rilevante per chi utilizza Claude Code nel terminale e desidera tagliare drasticamente i costi delle API e la latenza dei cicli di sviluppo.\n**Topic dominante:** Engineer\n**Vale il tempo?** 4 ⭐⭐⭐⭐\n**Perché:** Mostra come combinare un modello decisionale leggero ed economico con un modello generativo potente per massimizzare l'efficienza degli agenti di coding locali.\n**Tag:** #AI #ClaudeCode #TypeSafeAI #SviluppoSoftware",
+    "rating": 4,
+    "topic": "Engineer",
+    "title": "Come usare Jev (TypeSafe AI) con Claude Code per risparmiare tempo e soldi",
+    "processed_at": "2026-09-25T12:42:27"
   }
 }
