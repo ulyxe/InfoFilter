@@ -2013,5 +2013,15 @@
     "topic": "Entrambi",
     "title": "Come Costruire un Agente AI Vocale \"Speed to Lead\" per le Aziende",
     "processed_at": "2026-09-27T12:54:18"
+  },
+  "Qf5zGse6ii4": {
+    "video_id": "Qf5zGse6ii4",
+    "url": "https://www.youtube.com/watch?v=Qf5zGse6ii4",
+    "status": "ok",
+    "analysis": "**Titolo:** Jev è chiuso. L'ho rifatto open.\n**Canale:** Rizzo AI Academy\n**Durata stimata:** 11 minuti\n**Argomento principale:** Come replicare Jev (il modello di classificazione ultra-rapido di TypeSafe AI) in locale usando modelli open-source ottimizzati.\n**Punti chiave:**\n- Introduzione a Jev e al concetto di \"System One model\" per decisioni rapide senza generazione di token.\n- Differenza tra approcci basati su Encoder (es. ModernBERT) e Decoder (es. Qwen, Spark).\n- Tecnica per velocizzare i Decoder disabilitando l'autoregressione e analizzando solo i logit del primo token.\n- Ottimizzazione delle risorse tramite il salvataggio in RAM della KV Cache dello stato fisso.\n- Calcolo parallelo delle risposte alle domande per ridurre i tempi di inferenza.\n- Calibrazione delle probabilità di Rizzo Flow tramite fine-tuning con LoRA/QLoRA su dataset distillati.\n- Integrazione di Rizzo Flow come tool locale per agenti autonomi (es. Claude).\n**Strumenti e tecnologie:** Rizzo Flow, Spark-X2.5, ModernBERT, Qwen-3.5, LoRA, QLoRA, Python, Hugging Face, GitHub, Claude, Jev, Semif, Laya\n**Risorse consigliate:** Repository GitHub di Rizzo Flow, Modello Spark-X2.5 su Hugging Face\n**Metodologia:**\n- Scegliere un modello Decoder open-source leggero (es. Spark-X2.5).\n- Configurare l'input con uno Stato fisso e le Istruzioni formattate in JSON.\n- Salvare la KV Cache dello Stato nella RAM per evitare ricalcoli.\n- Arrestare la generazione al primo token ed estrarre i logit delle opzioni desiderate.\n- Applicare Softmax sui logit selezionati per ottenere probabilità calibrate.\n- Eseguire fine-tuning con LoRA su dati distillati per migliorare l'accuratezza.\n**Builder ROI:** 3 — Ottimo per comprendere come strutturare pipeline decisionali rapide a basso costo per prodotti AI e automazioni aziendali.\n**Engineer ROI:** 3 — Molto utile per comprendere la manipolazione dei logit, la gestione della KV Cache e le tecniche di calibrazione dei modelli.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐\n**Perché:** Il video decostruisce in modo chiaro ed esaustivo un'architettura proprietaria complessa, rendendola accessibile e replicabile con tecnologie open-source locali.\n**Tag:** #AI #LocalLLM #RizzoFlow #FineTuning #SoftwareArchitecture",
+    "rating": 3,
+    "topic": "Entrambi",
+    "title": "Jev è chiuso. L'ho rifatto open.",
+    "processed_at": "2026-09-30T13:28:26"
   }
 }
