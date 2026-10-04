@@ -2093,5 +2093,15 @@
     "topic": "Engineer",
     "title": "Claude Mods - Come usarli e configurarli",
     "processed_at": "2026-10-03T12:29:56"
+  },
+  "qLfSDQ5NGh0": {
+    "video_id": "qLfSDQ5NGh0",
+    "url": "https://www.youtube.com/watch?v=qLfSDQ5NGh0",
+    "status": "ok",
+    "analysis": "**Titolo:** Come creare agenti AI che si migliorano da soli (Loop Engineering & Karpathy Loop)\n**Canale:** AI Labs\n**Durata stimata:** 13 minuti\n**Argomento principale:** L'implementazione del \"Loop Engineering\" e del \"Karpathy Loop\" per far sviluppare e testare software agli agenti AI in totale autonomia.\n\n**Punti chiave:**\n- Il Loop Engineering si focalizza sul design del sistema in cui l'agente opera invece che sulla singola istruzione di prompt.\n- Il Karpathy Loop (ispirato al progetto *autoresearch* di Andrej Karpathy) permette all'agente di applicare modifiche, testarle e mantenerle solo se il punteggio migliora.\n- Un loop efficace richiede task ripetitivi, metriche di validazione chiare e la possibilità per l'agente di eseguire e verificare il codice.\n- È fondamentale bloccare e proteggere i file di test in sola lettura per evitare che l'AI li modifichi per far passare codice errato.\n- L'utilizzo di Upstash Box fornisce ambienti sandbox isolati nel cloud, ideali per eseguire più agenti in parallelo in sicurezza.\n- Lo skill \"Auto-Loop\" analizza i fallimenti passati e aggiorna dinamicamente le regole operative per i cicli di sviluppo successivi.\n\n**Strumenti e tecnologie:** Claude Code, Upstash Box, Node.js, Git, Supabase, Vitest\n\n**Risorse consigliate:** Repository GitHub \"autoresearch\" di Andrej Karpathy, Video \"Hermes Loops\" sul canale AI Labs, AI Labs Pro\n\n**Metodologia:**\n- Configurare lo skill \"project-context\" per definire le linee guida e l'architettura dell'app.\n- Generare i test di validazione automatici prima di procedere con la scrittura del codice.\n- Approvare e bloccare i test in una cartella protetta per impedire all'agente di alterarli.\n- Avviare il \"feature-builder\" all'interno di una sandbox isolata per generare la funzionalità.\n- Salvare i risultati di ogni ciclo di test in un file di log (results.tsv).\n- Utilizzare lo skill \"auto-loop\" per analizzare i log dei test falliti e aggiornare le istruzioni operative per i cicli futuri.\n\n**Builder ROI:** 3. Molto interessante per solopreneur che vogliono delegare la creazione di intere feature, anche se richiede competenze tecniche di base per il setup.\n**Engineer ROI:** 4. Estremamente rilevante per sviluppatori che vogliono creare pipeline di sviluppo agentico affidabili e con tassi di allucinazione ridotti.\n**Topic dominante:** Engineer\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** Spiega in modo chiaro e architetturale come strutturare flussi di lavoro agentici capaci di auto-correzione, un passo avanti rispetto al semplice prompting.\n\n**Tag:** #AI #LoopEngineering #ClaudeCode #Upstash #AgenticAI",
+    "rating": 4,
+    "topic": "Engineer",
+    "title": "Come creare agenti AI che si migliorano da soli (Loop Engineering & Karpathy Loop)",
+    "processed_at": "2026-10-04T13:07:01"
   }
 }
