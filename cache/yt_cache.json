@@ -2143,5 +2143,15 @@
     "topic": "Builder",
     "title": "5 modi per farti rispettare da chiunque",
     "processed_at": "2026-10-10T13:25:39"
+  },
+  "J9NQTYUP6k0": {
+    "video_id": "J9NQTYUP6k0",
+    "url": "https://www.youtube.com/watch?v=J9NQTYUP6k0",
+    "status": "ok",
+    "analysis": "**Titolo:** Guida e Best Practice Aggiornate per Claude Code\n**Canale:** Simon Scrapes\n**Durata stimata:** 18 minuti\n**Argomento principale:** Strategie e ottimizzazioni aggiornate per configurare ed eseguire agenti AI con Claude Code.\n**Punti chiave:**\n- Superare il Plan Mode definendo chiaramente task, guardrail e criteri di completamento.\n- Affidarsi ai livelli di effort predefiniti senza inserire prompt ridondanti nel testo.\n- Creare script deterministici di verifica automatica sui risultati generati dal modello.\n- Utilizzare il comando `/goal` per guidare i cicli di iterazione fino al soddisfacimento dei test.\n- Mantenere il file `CLAUDE.md` sotto le 200 righe e scansionarlo con `/doctor prompt-audit`.\n- Costruire skill a partire dagli errori reali osservati durante l'esecuzione senza skill.\n- Eliminare skill inefficaci o costose tramite `/skill-doctor` ed eval dei plugin.\n- Implementare hook deterministici per i vincoli critici anziché istruzioni in maiuscolo.\n**Strumenti e tecnologie:** Claude Code, Anthropic Claude, Opus 5.5, MCP (Model Context Protocol), Python\n**Risorse consigliate:** Agentic Academy, Documentazione Claude Code\n**Metodologia:**\n- Definire brief, guardrail e criterio di completamento per il task.\n- Eseguire il processo ed estrarre regole basate unicamente sui fallimenti effettivi.\n- Integrare script di validazione e impostare limiti di delega per i sotto-agenti.\n- Automatizzare i flussi ricorrenti tramite progetti in background ed eventi MCP.\n**Builder ROI:** 3/5, Utile per automatizzare processi di business e ridurre la supervisione manuale sugli agenti.\n**Engineer ROI:** 4/5, Ottime indicazioni pratiche per gestire il contesto di Claude Code e ottimizzare i flussi di sviluppo agentico.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐⭐ (4/5)\n**Perché:** Offre consigli operativi chiari sia per developer sia per solopreneur su come strutturare agenti AI efficienti ed economici.\n**Tag:** #ClaudeCode #AgentiAI #Produttività",
+    "rating": 4,
+    "topic": "Entrambi",
+    "title": "Guida e Best Practice Aggiornate per Claude Code",
+    "processed_at": "2026-10-11T13:53:15"
   }
 }
