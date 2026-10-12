@@ -2153,5 +2153,45 @@
     "topic": "Entrambi",
     "title": "Guida e Best Practice Aggiornate per Claude Code",
     "processed_at": "2026-10-11T13:53:15"
+  },
+  "HhZdNYI4pJs": {
+    "video_id": "HhZdNYI4pJs",
+    "url": "https://www.youtube.com/watch?v=HhZdNYI4pJs",
+    "status": "ok",
+    "analysis": "**Titolo:** I Tried 100+ Github Repos for Claude. These 10 Are the Best\n**Canale:** Nate Herk | AI Automation\n**Durata stimata:** 10 minuti e 36 secondi\n**Argomento principale:** Selezione e panoramica dei 10 migliori repository GitHub per estendere le funzionalità di Claude e Claude Code nei flussi di lavoro reali.\n**Punti chiave:**\n- Hyperframes permette la creazione ed il montaggio video automatizzato tramite codice ed elementi HTML.\n- Google Workspace CLI offre integrazione profonda da riga di comando con gli strumenti Google.\n- Apify MCP Server estende le capacità di web scraping su siti complessi e social network.\n- Scrollcraft migliora il design e la creazione di landing page ad alto impatto visivo.\n- Humanizer corregge il testo generato da AI eliminando i tipici pattern artificiali.\n- Agent Skills e Expo Skills supportano la gestione di progetti complessi e lo sviluppo di app mobile native.\n- Supabase, Stripe, Playwright CLI e Claude Security automatizzano backend, pagamenti, testing browser e audit di sicurezza.\n- Open SEO fornisce dati reali su parole chiave e posizionamento per progetti web.\n**Strumenti e tecnologie:** Hyperframes, Google Workspace CLI, Apify, Scrollcraft, Humanizer, Agent Skills, Expo, Supabase, Stripe, Playwright, Claude Security, Open SEO, Claude Code\n**Risorse consigliate:** Claude Repo Pack\n**Metodologia:**\n- N/A\n**Builder ROI:** 3/5, offre risorse pratiche per creare pacchetti di servizi automatizzati e prodotti scalabili per clienti.\n**Engineer ROI:** 3/5, presenta integrazioni e skill CLI utili a velocizzare la programmazione agentica e il testing del codice.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐\n**Perché:** Fornisce una panoramica bilanciata e sintetica su strumenti che migliorano sia la produttività di sviluppo sia le opportunità di monetizzazione.\n**Tag:** #Claude #GitHub #AI #produttività #automation",
+    "rating": 3,
+    "topic": "Entrambi",
+    "title": "I Tried 100+ Github Repos for Claude. These 10 Are the Best",
+    "processed_at": "2026-10-12T16:38:08"
+  },
+  "zwQmodmp1To": {
+    "video_id": "zwQmodmp1To",
+    "url": "https://www.youtube.com/watch?v=zwQmodmp1To",
+    "status": "ok",
+    "analysis": "**Titolo:** 10 Insane Open Source AI Repos You Need To Download\n**Canale:** AI Automations by Jack\n**Durata stimata:** 20 minuti\n**Argomento principale:** Panoramica di 10 repository open-source per potenziare agenti AI, automazioni e sviluppo con Claude Code.\n**Punti chiave:**\n- PhotoCraft / ArtCraft Suite: Alternative open-source alla suite Adobe gestibili da agenti AI.\n- Compositor: Editor di immagini minimale guidato da istruzioni in linguaggio naturale.\n- Ego Lite: Browser web progettato per permettere agli agenti di navigare in background.\n- Rea: Tool per decostruire e analizzare la struttura funzionale delle applicazioni.\n- 21st.dev MCP: Registro di componenti UI da cui Claude può pescare risorse grafiche ed elementi di design.\n- Skills (Vercel Labs): Sistema per la ricerca e installazione automatica delle abilità per agenti.\n- Orca: Orchestratore per l'esecuzione simultanea e parallela di più agenti di coding.\n- Arena Skill & Security Audit: Framework per testare risposte competitive ed eseguire audit di sicurezza sul codice.\n**Strumenti e tecnologie:** PhotoCraft, Compositor, Ego Lite, Rea, 21st.dev MCP, Skills, Orca, Zapier MCP, Arena Skill, Universal Modder, Security-Audit, SlopMonster, Claude Code\n**Risorse consigliate:** Corso Claude Code, Agentic OS\n**Metodologia:**\nN/A\n**Builder ROI:** 4, Ottima risorsa per individuare librerie UI e risorse da integrare rapidamente nei propri prodotti basati su agenti.\n**Engineer ROI:** 4, Valida selezione di server MCP e tool da riga di comando per estendere la produttività con Claude Code.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** Offre idee pratiche sia per sviluppatori in cerca di integrazioni MCP, sia per builder focalizzati sull'assemblaggio di prodotti AI.\n**Tag:** #AI #OpenSource #ClaudeCode #MCP #AgentiAI",
+    "rating": 4,
+    "topic": "Entrambi",
+    "title": "10 Insane Open Source AI Repos You Need To Download",
+    "processed_at": "2026-10-12T16:39:54"
+  },
+  "gvESqM6s0kM": {
+    "video_id": "gvESqM6s0kM",
+    "url": "https://www.youtube.com/watch?v=gvESqM6s0kM",
+    "status": "ok",
+    "analysis": "**Titolo:** 23 Claude Mistakes You're Making\n**Canale:** RoboNuggets\n**Durata stimata:** 20:30\n**Argomento principale:** Guida ai principali errori di utilizzo con Claude 5.5 e Claude Code per ottimizzare token, costi e qualità dei risultati.\n**Punti chiave:**\n- Evitare sessioni prolungate con argomenti promiscui (\"kitchen sink\") per non degradare la memoria di contesto.\n- Non cambiare modello a metà chat per evitare l'azzeramento della cache dei prompt.\n- Utilizzare `/rewind` al posto di correggere ripetutamente gli errori nel medesimo flusso.\n- Porre domande secondarie tramite il comando `/btw` senza inquinare la cronologia principale.\n- Dosare il livello di effort (\"Max\" ha ritorni marginali decrescenti e costi elevati).\n- Fornire il contesto e la motivazione delle regole per guidare l'agente anziché usare divieti ciechi.\n- Gestire la cache dei prompt mantenendola attiva o compattando il contesto prima delle pause.\n- Utilizzare sub-agenti e strumenti di sicurezza (es. DCG, Blast Radius) per prevenire modifiche distruttive e consumi eccessivi.\n\n**Strumenti e tecnologie:** Claude Code, Opus 5.5, Sonnet 5.5, Haiku 5.5, Git, MCP, DCG, Blast Radius, Jev\n\n**Risorse consigliate:** PDF \"23 Claude Mistakes You're Making\", RoboNuggets Community, Claude Living Masterclass\n\n**Metodologia:**\n- Isolare ogni task in una nuova sessione o ripulire con `/clear`.\n- Configurare il file `CLAUDE.md` mantenendolo sintetico (<200 righe) e strutturato come un router.\n- Usare `/align` per allineare gli obiettivi prima di avviare sviluppi complessi.\n- Sfruttare comandi CLI e router automatici per smistare i task sui modelli più economici.\n\n**Builder ROI:** 3 — Fornisce indicazioni pratiche per ottimizzare i costi e i flussi di lavoro nello sviluppo di prodotti AI.\n**Engineer ROI:** 4 — Offre strategie concrete ed efficaci per la gestione del contesto, dei comandi agentici e dell'efficienza dei dati in Claude Code.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** Il video analizza nel dettaglio l'architettura dei prompt e dei contesti di Claude, garantendo un risparmio immediato di risorse sia per sviluppatori che per builder.\n**Tag:** #AI #ClaudeCode #produttività #PromptEngineering",
+    "rating": 4,
+    "topic": "Entrambi",
+    "title": "23 Claude Mistakes You're Making",
+    "processed_at": "2026-10-12T16:41:34"
+  },
+  "b3bh8h7NRx0": {
+    "video_id": "b3bh8h7NRx0",
+    "url": "https://www.youtube.com/watch?v=b3bh8h7NRx0",
+    "status": "ok",
+    "analysis": "**Titolo:** REA: Reverse Engineer Anything vs Claude Code Nativo\n**Canale:** Dario Fontanel\n**Durata stimata:** 11:30\n**Argomento principale:** Confronto tra il tool REA e Claude Code nativo nella clonazione di applicazioni desktop.\n**Punti chiave:**\n- Presentazione di REA, repository GitHub per il reverse engineering di binari e applicazioni.\n- Definizione dei concetti chiave del reverse engineering dal prodotto al progetto.\n- Test di clonazione di Microsoft Word utilizzando REA integrato in Claude Code.\n- Test comparativo eseguito in parallelo con Claude Code nativo senza estensioni.\n- Analisi delle funzionalità, stili e compatibilità dei file .docx generati.\n- Risultato: Claude Code nativo produce un clone più completo rispetto all'uso di REA.\n- Riflessione sul futuro della clonazione software e dell'open source personalizzato.\n**Strumenti e tecnologie:** REA, Claude Code, GitHub, Microsoft Word, PhotoCraft\n**Risorse consigliate:** Repository GitHub REA, AI Academy\n**Metodologia:**\n- Integrare il repository di REA all'interno della sessione di Claude Code.\n- Inviare il prompt per analizzare e clonare l'applicazione target locale.\n- Validare il software generato confrontandone le funzioni con l'originale.\n**Builder ROI:** 3, Utile per comprendere le possibilità di replicare software e creare alternative custom.\n**Engineer ROI:** 4, Molto rilevante per misurare l'efficacia degli agenti di coding nella ricostruzione automatica di app.\n**Topic dominante:** Engineer\n**Vale il tempo?** ⭐⭐⭐⭐\n**Perché:** Utile soprattutto agli sviluppatori per valutare i limiti reali dei tool esterni rispetto alle capacità native dei LLM.\n**Tag:** #ClaudeCode #ReverseEngineering #AICoding",
+    "rating": 4,
+    "topic": "Engineer",
+    "title": "REA: Reverse Engineer Anything vs Claude Code Nativo",
+    "processed_at": "2026-10-12T16:42:27"
   }
 }
