@@ -2193,5 +2193,25 @@
     "topic": "Engineer",
     "title": "REA: Reverse Engineer Anything vs Claude Code Nativo",
     "processed_at": "2026-10-12T16:42:27"
+  },
+  "s_1GPN-NXA0": {
+    "video_id": "s_1GPN-NXA0",
+    "url": "https://www.youtube.com/watch?v=s_1GPN-NXA0",
+    "status": "ok",
+    "analysis": "**Titolo:** The NEW Agentic OS standard for Claude 5.5 Models is here (Full Breakdown)\n**Canale:** Jay E | RoboNuggets\n**Durata stimata:** 38 minuti\n**Argomento principale:** Guida alla strutturazione di un sistema operativo agentico efficiente basato sui modelli Claude tramite il framework ARMS.\n**Punti chiave:**\n- Presentazione del framework ARMS (Apps, Routines, Memory, Skills).\n- Classificazione e progettazione delle competenze (Skills) per evitare l'overfitting.\n- Ottimizzazione dei costi tramite model routing dinamico dei prompt.\n- Distinzione tra routine attive e passive per la riduzione dell'impatto sui token.\n- Gestione della memoria a lungo e breve termine tramite prompt caching e file Markdown.\n- Sviluppo di micro-app ed estensioni browser personalizzate per potenziare gli agenti.\n**Strumenti e tecnologie:** Claude 5.5 (Opus, Sonnet, Haiku), Jev, Claude Code, HTML, Estensioni Chrome, OpenRouter, Rubric Editor\n**Risorse consigliate:** Guida PDF \"The new ARMS levels\"\n**Metodologia:**\n- Definire e categorizzare le Skills riutilizzabili con relativo routing di modello.\n- Configurare le Routines programmate isolando i task passivi da quelli attivi.\n- Strutturare la Memoria con file Markdown di mappa e ottimizzazione della finestra di contesto.\n- Creare Apps ed estensioni per integrare gli agenti nel flusso di lavoro quotidiano.\n**Builder ROI:** 3, Utile per progettare architetture agentiche riutilizzabili ed efficienti sul piano dei costi.\n**Engineer ROI:** 3, Offre spunti pratici sulla gestione del contesto, prompt caching e integrazione via CLI/API.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐\n**Perché:** Fornisce una struttura concettuale solida per ottimizzare l'uso degli agenti AI riducendo consumi e ridondanze.\n**Tag:** #AgenticAI #Claude #Produttività #AIWorkflow #PromptEngineering",
+    "rating": 3,
+    "topic": "Entrambi",
+    "title": "The NEW Agentic OS standard for Claude 5.5 Models is here (Full Breakdown)",
+    "processed_at": "2026-10-25T12:27:16"
+  },
+  "xpfuSPG71XI": {
+    "video_id": "xpfuSPG71XI",
+    "url": "https://www.youtube.com/watch?v=xpfuSPG71XI",
+    "status": "ok",
+    "analysis": "**Titolo:** Jev + Claude: The Cheapest Model That Can Do It (Agentic OS)\n**Canale:** Jack Roberts\n**Durata stimata:** 12:15\n**Argomento principale:** Presentazione del modello decisionale Jev e della sua integrazione in Agentic OS per ottimizzare costi, tempi e automazioni aziendali.\n**Punti chiave:**\n- Introduzione a Jev, modello ultra-veloce ed economico specializzato in decisioni rapide.\n- Smistamento e categorizzazione automatizzata della posta elettronica in tempo reale.\n- Routing dinamico delle richieste verso i modelli più idonei (es. Claude Opus 5.5).\n- Integrazione di comandi vocali e sintesi audio avanzata tramite Fish Audio.\n- Automazione nell'editing e nella selezione degli asset visivi per reel e short video.\n- Verifica automatizzata delle fatture con analisi del rischio di frode.\n- Ricerca semantica di immagini basata su descrizione visiva automatica.\n**Strumenti e tecnologie:** Jev, Claude Opus 5.5, Agentic OS, Fish Audio, Claude Code\n**Risorse consigliate:** Claude Code Full Course\n**Metodologia:**\n- Integrare l'API di Jev all'interno del sistema operativo agentico (Agentic OS).\n- Connettere il servizio Fish Audio per la gestione dell'interfaccia vocale.\n- Configurare il routing automatico per delegare compiti complessi a Claude o Codex.\n- Applicare Jev come classificatore rapido per email, fatture e contenuti multimediali.\n**Builder ROI:** 3/5 — Offre spunti pratici per creare workflow agentici efficienti e ridurre i costi operativi.\n**Engineer ROI:** 3/5 — Mostra l'architettura per il routing dinamico dei prompt e l'orchestrazione multi-modello.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐\n**Perché:** Bilancia concetti di architettura software e casi d'uso di business per l'automazione dei processi tramite AI.\n**Tag:** #AI #AgenticOS #Produttività #Automation #Claude",
+    "rating": 3,
+    "topic": "Entrambi",
+    "title": "Jev + Claude: The Cheapest Model That Can Do It (Agentic OS)",
+    "processed_at": "2026-10-25T12:28:11"
   }
 }
