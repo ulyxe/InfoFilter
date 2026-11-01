@@ -2253,5 +2253,15 @@
     "topic": "Entrambi",
     "title": "5 Mistakes You're Making With Jev (And How To Fix Them)",
     "processed_at": "2026-10-30T14:01:15"
+  },
+  "ZbmfYMlrlII": {
+    "video_id": "ZbmfYMlrlII",
+    "url": "https://www.youtube.com/watch?v=ZbmfYMlrlII",
+    "status": "ok",
+    "analysis": "**Titolo:** 9 Free Open Source GitHub Repos Blowing Up Right Now\n**Canale:** Jack Roberts\n**Durata stimata:** 20 minuti\n**Argomento principale:** Presentazione di repository open-source e strumenti innovativi per potenziare gli agenti AI, creare app Mac native, gestire la memoria universale e migliorare l'interfaccia/SEO dei progetti.\n**Punti chiave:**\n- Elephant-Goldfish utilizza sub-agenti privi di memoria (\"goldfish\") per trovare bug ed errori nei piani generati da Claude.\n- Honcho integra un layer di memoria universale condiviso tra diverse chat e piattaforme (Claude, Grok, Cursor, Slack).\n- Open UI converte le risposte di testo dei modelli LLM in dashboard visive e grafici interattivi in tempo reale.\n- BAMA (Build Any Mac App) permette di generare ed eseguire app Mac native (menu bar) partendo da un prompt.\n- claude-seo effettua audit SEO automatici del sito con più agenti e genera un piano di azione sequenziale.\n- Oxylabs Web API consente agli agenti AI di accedere a dati web aggiornati in tempo reale in formato JSON pulito.\n- Hallmark e MotionSites migliorano l'estetica dei siti web generati da AI, eliminando l'effetto \"AI slop\" e aggiungendo animazioni cinematografiche.\n- Postiz, ai-job-search e DeepTutor offrono automazioni open-source per la pianificazione social (alternativa a Buffer), l'ottimizzazione del CV per offerte di lavoro e l'apprendimento interattivo da PDF.\n**Strumenti e tecnologie:** Elephant-Goldfish, Honcho, Open UI, BAMA, claude-seo, Oxylabs Web API, Hallmark, MotionSites, Postiz, ai-job-search, DeepTutor, Claude Code, Docker\n**Risorse consigliate:** Corso completo Claude Code, Agentic OS\n**Metodologia:**\nN/A\n**Builder ROI:** 5/5, Presenta risorse open-source subito utilizzabili per validare, lanciare e monetizzare micro-SaaS o strumenti di automazione.\n**Engineer ROI:** 5/5, Ottima panoramica su skill avanzate per Claude Code, pattern multi-agente, integrazioni MCP e sistemi di memoria a lungo termine.\n**Topic dominante:** Entrambi\n**Vale il tempo?** ⭐⭐⭐⭐⭐\n**Perché:** Fornisce un valore pratico immenso sia a sviluppatori che a builder di prodotti AI, mostrando strumenti concreti per abbattere costi e tempi di sviluppo.\n**Tag:** #GitHub #AI #ClaudeCode #OpenSource #Productivity",
+    "rating": 5,
+    "topic": "Entrambi",
+    "title": "9 Free Open Source GitHub Repos Blowing Up Right Now",
+    "processed_at": "2026-11-01T14:11:10"
   }
 }
